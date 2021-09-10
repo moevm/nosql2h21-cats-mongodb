@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - 2000:27017
+    restart: unless-stopped
+
+  app:
+    build:
+      context: services/app
+      dockerfile: Dockerfile.development
+    environment:
+      - PORT=8080
+      - DB_HOST=mongodb
+      - DB_PORT=27017
+    image: 'cats_backend'
+    ports:
+      - 8080:8080
+    depends_on:
+      - mongodb
