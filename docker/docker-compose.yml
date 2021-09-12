@@ -22,3 +22,14 @@ services:
       - 8080:8080
     depends_on:
       - mongodb
+
+  cats-app-front:
+    build:
+      context: ../cats-app-front
+      dockerfile: Dockerfile
+    ports: 
+      - 4201:4201
+    image: cats-app-front
+    volumes: 
+      - ../cats-app-front:/usr/local/app/cats-app-front
+      - /usr/local/app/cats-app-front/node_modules
