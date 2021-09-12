@@ -11,8 +11,8 @@ services:
 
   app:
     build:
-      context: services/app
-      dockerfile: Dockerfile.development
+      context: ../
+      dockerfile: Dockerfile
     environment:
       - PORT=8080
       - DB_HOST=mongodb
@@ -33,3 +33,5 @@ services:
     volumes: 
       - ../cats-app-front:/usr/local/app/cats-app-front
       - /usr/local/app/cats-app-front/node_modules
+    depends_on:
+      - app

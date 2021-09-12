@@ -20,35 +20,24 @@ import java.util.List;
 public class MainController {
 
 	private final CatBreadRepository catBreadRepository;
-	private final MongoTemplate mongoTemplate;
 
 	@GetMapping("/")
 	public String greeting() {
-
-
 		return "Hello World!";
 	}
 
 	@GetMapping("/hello")
 	public String greeting1() {
-
 		return "Hello World!";
 	}
 
 	@GetMapping("/bread")
 	public ResponseEntity<List<CatBreed>> getAllBreeds() {
-
-
-
 		return ResponseEntity.ok().body(catBreadRepository.findAll());
 	}
 
 	@PostMapping("/bread")
 	public ResponseEntity<CatBreed> addBread(@RequestBody CatBreed catBreed) {
-
-		System.out.println(catBreed);
-
-
 		return ResponseEntity.ok().body(catBreadRepository.insert(catBreed));
 	}
 }
