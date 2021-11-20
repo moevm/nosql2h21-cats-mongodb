@@ -3,6 +3,9 @@ package ru.nosqlproject.catsmongo.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +17,8 @@ import ru.nosqlproject.catsmongo.dto.CatBreedDto;
 import ru.nosqlproject.catsmongo.entity.CatBreed;
 import ru.nosqlproject.catsmongo.service.CatBreedService;
 
+import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,12 +30,14 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MainController {
 
-	private final CatBreedService catBreedService;
+//	private final CatBreedService catBreedService;
 
-	@PostMapping("/bread")
+	@PostMapping("/breed")
 	@ResponseStatus(HttpStatus.ACCEPTED)
-	public void addBread(@RequestBody CatBreedDto catBreed) {
-		catBreedService.addNewBreed(new CatBreedDto());
+	public void addBread(@RequestBody @Valid CatBreedDto catBreed) {
+//		catBreedService.addNewBreed(new CatBreedDto());
+
+		System.out.println("Breed is ok");
 	}
 
 	@GetMapping("/breed")
@@ -41,12 +48,23 @@ public class MainController {
 
 	@PostMapping("/breeds")
 	@ResponseStatus(HttpStatus.OK)
-	public void loadNewDB(@RequestBody List<CatBreedDto> cats) {
+	public void loadNewDB(@RequestBody List<@Valid CatBreedDto> cats) {
 
 	}
 
-	@GetMapping("/db")
+/*	@GetMapping("/db")
 	public List<CatBreed> importDB() {
 		return catBreedService.importDB();
+	}*/
+
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<Object> handleException(MethodArgumentNotValidException ex) {
+		Map<String, String> errors = new HashMap<>();
+		ex.getBindingResult().getAllErrors().forEach((error) -> {
+			String fieldName = ((FieldError) error).getField();
+			String errorMessage = error.getDefaultMessage();
+			errors.put(fieldName, errorMessage);
+		});
+		return ResponseEntity.badRequest().body(errors);
 	}
 }
