@@ -1,6 +1,7 @@
 package ru.nosqlproject.catsmongo.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -30,14 +31,25 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MainController {
 
-//	private final CatBreedService catBreedService;
+	@Autowired
+	private final CatBreedService catBreedService;
 
 	@PostMapping("/breed")
 	@ResponseStatus(HttpStatus.ACCEPTED)
 	public void addBread(@RequestBody @Valid CatBreedDto catBreed) {
-//		catBreedService.addNewBreed(new CatBreedDto());
-
-		System.out.println("Breed is ok");
+		/*
+			maybe some response if exception
+		 */
+		/*
+		try{
+			catBreedService.addNewBreed(catBreed);
+			return new ResponseEntity(catBreed, HttpStatus.CREATED);
+		} catch (Exception e){
+			return new ResponseEntity<>(catBreed, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		 */
+		catBreedService.addNewBreed(catBreed);
+		//System.out.println("Breed is ok");
 	}
 
 	@GetMapping("/breed")

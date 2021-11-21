@@ -7,4 +7,7 @@ import ru.nosqlproject.catsmongo.entity.CatBreed;
  * @author Kirill Mololkin Kirill-mol 10.09.2021
  */
 public interface CatBreedRepository extends MongoRepository<CatBreed, Long> {
+
+    CatBreed findByName(final String name);
+
 }
