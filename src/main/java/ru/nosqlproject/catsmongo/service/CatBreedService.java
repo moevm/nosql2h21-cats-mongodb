@@ -17,4 +17,6 @@ public interface CatBreedService {
     List<CatBreed> importDB();
 
     CatBreedDto findByName(String name);
+
+    List<CatBreedDto> findByLife(int from, int to);
 }

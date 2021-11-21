@@ -2,6 +2,7 @@ package ru.nosqlproject.catsmongo.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -19,6 +20,7 @@ import ru.nosqlproject.catsmongo.entity.CatBreed;
 import ru.nosqlproject.catsmongo.service.CatBreedService;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +61,16 @@ public class MainController {
 	public ResponseEntity<CatBreedDto> getBreedByName(@RequestParam(required = false) String name){
 		return new ResponseEntity<CatBreedDto>(catBreedService.findByName(name), HttpStatus.OK);
 	}
+
+	@GetMapping("/breedlife")
+	public ResponseEntity<List<CatBreedDto>> getBreedByLifespan(@RequestParam("from") int from,
+													  @RequestParam("to") int to){
+		// from-1 to+1
+		List<CatBreedDto> res = new ArrayList<CatBreedDto>();
+		catBreedService.findByLife(from, to).forEach(res::add);
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+
 
 	@GetMapping("/breed")
 	public ResponseEntity<List<?>> getAllBreedsByFilter(@RequestParam(required = false) Map<String, Object> params) {

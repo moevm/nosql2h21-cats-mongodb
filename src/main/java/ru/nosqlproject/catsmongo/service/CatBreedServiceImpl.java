@@ -9,6 +9,7 @@ import ru.nosqlproject.catsmongo.entity.CatBreed;
 import ru.nosqlproject.catsmongo.mapping.CatBreedMapper;
 import ru.nosqlproject.catsmongo.repository.CatBreedRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +42,16 @@ public class CatBreedServiceImpl implements CatBreedService{
     @Override
     public CatBreedDto findByName(String name) {
         return catBreedMapper.mapToDto(catBreedRepository.findByName(name));
+    }
+
+    @Override
+    public List<CatBreedDto> findByLife(int from, int to) {
+        List<CatBreed> res = catBreedRepository.findByAverageLifespanBetween(from, to);
+        List<CatBreedDto> dtoRes = new ArrayList<CatBreedDto>();
+        for (CatBreed val: res) {
+            dtoRes.add(catBreedMapper.mapToDto(val));
+        }
+        return dtoRes;
     }
 
     @Override
