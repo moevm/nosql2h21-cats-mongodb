@@ -32,7 +32,7 @@ public class CatBreed {
 
 	private String origin;
 
-	private int overageLifespan;
+	private int averageLifespan;
 
 	private Map<String, Integer> weight;
 

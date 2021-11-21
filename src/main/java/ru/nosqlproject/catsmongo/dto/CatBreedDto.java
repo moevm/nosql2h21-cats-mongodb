@@ -35,7 +35,7 @@ public class CatBreedDto {
 
     @Min(value = 1L, message = "Cats don't leave less than 1 year")
     @Max(value = 40L, message = "Cats don't leave more than 40 years")
-    private int overageLifespan;
+    private int averageLifespan;
 
     @NotEmpty(message = "Weight is empty")
     @FromToMapsCustomValidate(message = "Weight is wrong")
