@@ -52,6 +52,14 @@ public class MainController {
 		//System.out.println("Breed is ok");
 	}
 
+	/*
+	test map method
+	 */
+	@GetMapping("/breedname")
+	public ResponseEntity<CatBreedDto> getBreedByName(@RequestParam(required = false) String name){
+		return new ResponseEntity<CatBreedDto>(catBreedService.findByName(name), HttpStatus.OK);
+	}
+
 	@GetMapping("/breed")
 	public ResponseEntity<List<?>> getAllBreedsByFilter(@RequestParam(required = false) Map<String, Object> params) {
 		System.out.println(params);

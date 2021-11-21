@@ -39,6 +39,11 @@ public class CatBreedServiceImpl implements CatBreedService{
     }
 
     @Override
+    public CatBreedDto findByName(String name) {
+        return catBreedMapper.mapToDto(catBreedRepository.findByName(name));
+    }
+
+    @Override
     public List<CatBreedDto> searchBreedByParams(Map<String, String> params) {
         return null;
     }
@@ -52,4 +57,5 @@ public class CatBreedServiceImpl implements CatBreedService{
     public List<CatBreed> importDB() {
         return null;
     }
+
 }
