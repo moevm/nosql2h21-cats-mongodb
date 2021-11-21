@@ -12,6 +12,7 @@ import ru.nosqlproject.catsmongo.repository.CatBreedRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class CatBreedServiceImpl implements CatBreedService{
@@ -52,6 +53,22 @@ public class CatBreedServiceImpl implements CatBreedService{
             dtoRes.add(catBreedMapper.mapToDto(val));
         }
         return dtoRes;
+    }
+
+    @Override
+    public CatBreedDto findById(String id) {
+        Long _id;
+        try{
+            _id = Long.parseLong(id);
+        } catch (Exception e){
+            return null;
+        }
+        Optional<CatBreed> catBreed = catBreedRepository.findById(_id);
+        if (catBreed.isPresent()){
+            return catBreedMapper.mapToDto(catBreed.get());
+        } else {
+            return null;
+        }
     }
 
     @Override

@@ -5,6 +5,7 @@ import ru.nosqlproject.catsmongo.entity.CatBreed;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public interface CatBreedService {
 
@@ -19,4 +20,6 @@ public interface CatBreedService {
     CatBreedDto findByName(String name);
 
     List<CatBreedDto> findByLife(int from, int to);
+
+    CatBreedDto findById(String id);
 }

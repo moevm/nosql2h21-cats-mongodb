@@ -7,23 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.nosqlproject.catsmongo.dto.CatBreedDto;
 import ru.nosqlproject.catsmongo.entity.CatBreed;
 import ru.nosqlproject.catsmongo.service.CatBreedService;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Kirill Mololkin Kirill-mol 10.09.2021
@@ -76,12 +66,23 @@ public class MainController {
 		return new ResponseEntity<>(catBreedService.findAll(), HttpStatus.OK);
 	}
 
+	@GetMapping("/breed/{id}")
+	public ResponseEntity<CatBreedDto> getBreedById(@PathVariable("id") String id){
+		CatBreedDto catBreedDto = catBreedService.findById(id);
+		if (catBreedDto == null){
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} else{
+			return new ResponseEntity<>(catBreedDto, HttpStatus.OK);
+		}
+	}
+
 
 	@GetMapping("/breed")
 	public ResponseEntity<List<?>> getAllBreedsByFilter(@RequestParam(required = false) Map<String, Object> params) {
 		System.out.println(params);
 		return ResponseEntity.ok().body(List.of());
 	}
+
 
 	@PostMapping("/breeds")
 	@ResponseStatus(HttpStatus.OK)
