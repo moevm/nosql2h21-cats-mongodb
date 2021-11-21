@@ -71,6 +71,11 @@ public class MainController {
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
+	@GetMapping("/breeds")
+	public ResponseEntity<List<CatBreedDto>> getAllBreeds(){
+		return new ResponseEntity<>(catBreedService.findAll(), HttpStatus.OK);
+	}
+
 
 	@GetMapping("/breed")
 	public ResponseEntity<List<?>> getAllBreedsByFilter(@RequestParam(required = false) Map<String, Object> params) {
