@@ -1,0 +1,19 @@
+@import '../../../variables.less';
+@import '../../../mixins.less';
+
+:host {
+    display: block;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+
+    > h1 {
+        .title();
+    }
+
+    > img {
+        margin-left: 24px;
+    }
+}

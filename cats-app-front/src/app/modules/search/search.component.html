@@ -1,0 +1,13 @@
+<div class="title">
+    <h1>Search for kittens</h1>
+    <img src="/assets/cat-search.svg" alt="Funny cat" />
+</div>
+
+<form [formGroup]="filterForm">
+    <div class="filter-container">
+        <input formControlName="name" type="text">
+        <input formControlName="origin" type="text">
+        <input formControlName="averageLifespanFrom" type="number">
+        <input formControlName="averageLifespanTo" type="number">
+    </div>
+</form>

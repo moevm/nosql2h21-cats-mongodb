@@ -37,11 +37,13 @@
     "typescript": "~4.3.2"
   },
   "prettier": {
-    "arrowParens": "avoid",
-    "bracketSpacing": false,
-    "endOfLine": "lf",
     "printWidth": 90,
+    "tabWidth": 4,
+    "useTabs": false,
+    "semi": true,
     "singleQuote": true,
-    "tabWidth": 2
+    "trailingComma": "all",
+    "bracketSpacing": false,
+    "arrowParens": "avoid"
   }
 }
