@@ -111,9 +111,14 @@ public class MainController {
 
 
 	@PostMapping("/breeds")
-	@ResponseStatus(HttpStatus.OK)
-	public void loadNewDB(@RequestBody List<@Valid CatBreedDto> cats) {
-
+	// @ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<Map<String, Object>> loadNewDB(@RequestBody List<@Valid CatBreedDto> cats) {
+		try{
+			Map<String, Object> response = catBreedService.loadDb(cats);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} catch (Exception e){
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 /*	@GetMapping("/db")

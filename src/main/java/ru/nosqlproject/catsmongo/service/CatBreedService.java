@@ -28,4 +28,6 @@ public interface CatBreedService {
     List<CatBreedDto> findGapLength(int len);
 
     List<CatBreedDto> findGapWeight(int weight);
+
+    Map<String, Object> loadDb(List<CatBreedDto> breeds);
 }

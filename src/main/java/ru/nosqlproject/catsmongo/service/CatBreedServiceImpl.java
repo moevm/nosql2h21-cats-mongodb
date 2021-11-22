@@ -9,10 +9,7 @@ import ru.nosqlproject.catsmongo.entity.CatBreed;
 import ru.nosqlproject.catsmongo.mapping.CatBreedMapper;
 import ru.nosqlproject.catsmongo.repository.CatBreedRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class CatBreedServiceImpl implements CatBreedService{
@@ -98,6 +95,22 @@ public class CatBreedServiceImpl implements CatBreedService{
     @Override
     public List<CatBreedDto> findGapWeight(int w) {
         return catBreedDtoListFromBreed(catBreedRepository.findGapWeight(w));
+    }
+
+    @Override
+    public Map<String, Object> loadDb(List<CatBreedDto> breeds) {
+        long before = catBreedRepository.count();
+        Map<String, Object> response = new HashMap<>();
+        List<CatBreed> catBreeds = new ArrayList<CatBreed>();
+        for (CatBreedDto val:breeds) {
+            catBreeds.add(catBreedMapper.mapToEntity(val));
+        }
+        catBreedRepository.saveAll(catBreeds);
+        long after = catBreedRepository.count();
+        response.put("size_before", before);
+        response.put("size_after", after);
+        response.put("add", after-before);
+        return response;
     }
 
     @Override
