@@ -72,6 +72,15 @@ public class CatBreedServiceImpl implements CatBreedService{
     }
 
     @Override
+    public List<CatBreedDto> findBreedsByRegexpName(String reg) {
+        List<CatBreedDto> dto = new ArrayList<CatBreedDto>();
+        for (CatBreed val: catBreedRepository.findByRegexName(reg)) {
+            dto.add(catBreedMapper.mapToDto(val));
+        }
+        return dto;
+    }
+
+    @Override
     public List<CatBreedDto> searchBreedByParams(Map<String, String> params) {
         return null;
     }

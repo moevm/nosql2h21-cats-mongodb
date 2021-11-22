@@ -76,6 +76,18 @@ public class MainController {
 		}
 	}
 
+	/*
+	find by regex
+	 */
+	@GetMapping("/breeds/{like}")
+	public ResponseEntity<List<CatBreedDto>> getBreedsLikeName(@PathVariable("like") String like){
+		try{
+			List<CatBreedDto> res = catBreedService.findBreedsByRegexpName(like+="*");
+			return new ResponseEntity<>(res, HttpStatus.OK);
+		}catch (Exception e){
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 	@GetMapping("/breed")
 	public ResponseEntity<List<?>> getAllBreedsByFilter(@RequestParam(required = false) Map<String, Object> params) {

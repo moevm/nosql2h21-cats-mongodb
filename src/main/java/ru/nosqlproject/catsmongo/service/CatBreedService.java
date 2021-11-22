@@ -22,4 +22,6 @@ public interface CatBreedService {
     List<CatBreedDto> findByLife(int from, int to);
 
     CatBreedDto findById(String id);
+
+    List<CatBreedDto> findBreedsByRegexpName(String reg);
 }

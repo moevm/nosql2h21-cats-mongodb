@@ -1,6 +1,7 @@
 package ru.nosqlproject.catsmongo.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import ru.nosqlproject.catsmongo.entity.CatBreed;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface CatBreedRepository extends MongoRepository<CatBreed, Long> {
 
     List<CatBreed> findByAverageLifespanBetween(int from, int to);
 
+    @Query("{'name': {$regex: ?0 , $options: 'i'} }")
+    List<CatBreed> findByRegexName(String reg);
 }
