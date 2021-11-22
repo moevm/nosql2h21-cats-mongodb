@@ -81,6 +81,15 @@ public class CatBreedServiceImpl implements CatBreedService{
     }
 
     @Override
+    public List<CatBreedDto> findGapLength(int len) {
+        List<CatBreedDto> dto = new ArrayList<CatBreedDto>();
+        for (CatBreed val: catBreedRepository.findGapLength(len)) {
+            dto.add(catBreedMapper.mapToDto(val));
+        }
+        return dto;
+    }
+
+    @Override
     public List<CatBreedDto> searchBreedByParams(Map<String, String> params) {
         return null;
     }
