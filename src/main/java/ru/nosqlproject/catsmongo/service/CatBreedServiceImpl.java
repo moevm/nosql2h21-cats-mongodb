@@ -61,23 +61,6 @@ public class CatBreedServiceImpl implements CatBreedService{
     }
 
     @Override
-    public CatBreedDto findByName(String name) {
-        CatBreed catBreed = catBreedRepository.findByName(name);
-        try{
-            CatBreedDto catBreedDto = catBreedMapper.mapToDto(catBreed);
-            return catBreedDto;
-        } catch (Exception e){
-            return null;
-        }
-    }
-
-    @Override
-    public List<CatBreedDto> findByLife(int from, int to) {
-        List<CatBreed> res = catBreedRepository.findByAverageLifespanBetween(from, to);
-        return catBreedDtoListFromBreed(res);
-    }
-
-    @Override
     public CatBreedDto findById(String id) {
         Long _id;
         try{
@@ -93,24 +76,6 @@ public class CatBreedServiceImpl implements CatBreedService{
         }
     }
 
-    @Override
-    public List<CatBreedDto> findBreedsByRegexpName(String reg) {
-        List<CatBreedDto> dto = new ArrayList<CatBreedDto>();
-        for (CatBreed val: catBreedRepository.findByRegexName(reg)) {
-            dto.add(catBreedMapper.mapToDto(val));
-        }
-        return dto;
-    }
-
-    @Override
-    public List<CatBreedDto> findGapLength(int len) {
-        return catBreedDtoListFromBreed(catBreedRepository.findGapLength(len));
-    }
-
-    @Override
-    public List<CatBreedDto> findGapWeight(int w) {
-        return catBreedDtoListFromBreed(catBreedRepository.findGapWeight(w));
-    }
 
     @Override
     public Map<String, Object> loadDb(List<CatBreedDto> breeds) {
@@ -139,15 +104,13 @@ public class CatBreedServiceImpl implements CatBreedService{
     }
 
     @Override
-    public List<CatBreedDto> searchBreedByParams(Map<String, String> params) {
-        return null;
-    }
-
-    @Override
     public List<CatBreedDto> findAll() {
         return catBreedDtoListFromBreed(catBreedRepository.findAll());
     }
 
+    /*
+    find by pages (not get all db to user)
+     */
     @Override
     public List<CatBreedDto> findAllPagination(int page, int size) {
         try{
@@ -158,11 +121,6 @@ public class CatBreedServiceImpl implements CatBreedService{
         } catch (Exception e) {
             return null;
         }
-    }
-
-    @Override
-    public List<CatBreed> importDB() {
-        return null;
     }
 
 }

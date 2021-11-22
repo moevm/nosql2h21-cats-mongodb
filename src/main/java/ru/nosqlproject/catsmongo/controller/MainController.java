@@ -45,23 +45,6 @@ public class MainController {
 	}
 
 	/*
-	test map method
-	 */
-	@GetMapping("/breedname")
-	public ResponseEntity<CatBreedDto> getBreedByName(@RequestParam(required = false) String name){
-		return new ResponseEntity<CatBreedDto>(catBreedService.findByName(name), HttpStatus.OK);
-	}
-
-	@GetMapping("/breedlife")
-	public ResponseEntity<List<CatBreedDto>> getBreedByLifespan(@RequestParam("from") int from,
-													  @RequestParam("to") int to){
-		// from-1 to+1
-		List<CatBreedDto> res = new ArrayList<CatBreedDto>();
-		catBreedService.findByLife(from, to).forEach(res::add);
-		return new ResponseEntity<>(res, HttpStatus.OK);
-	}
-
-	/*
 	@GetMapping("/breeds")
 	public ResponseEntity<List<CatBreedDto>> getAllBreeds(){
 		return new ResponseEntity<>(catBreedService.findAll(), HttpStatus.OK);
@@ -78,7 +61,6 @@ public class MainController {
 		}
 	}
 
-
 	@GetMapping("/breedid/{id}")
 	public ResponseEntity<CatBreedDto> getBreedById(@PathVariable("id") String id){
 		CatBreedDto catBreedDto = catBreedService.findById(id);
@@ -87,32 +69,6 @@ public class MainController {
 		} else{
 			return new ResponseEntity<>(catBreedDto, HttpStatus.OK);
 		}
-	}
-
-	/*
-	find by regex
-	 */
-	@GetMapping("/breeds/{like}")
-	public ResponseEntity<List<CatBreedDto>> getBreedsLikeName(@PathVariable("like") String like){
-		try{
-			List<CatBreedDto> res = catBreedService.findBreedsByRegexpName(like+="*");
-			return new ResponseEntity<>(res, HttpStatus.OK);
-		}catch (Exception e){
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
-	/*
-	test method
-	 */
-	@GetMapping("/breeds/gaplen")
-	public ResponseEntity<List<CatBreedDto>> getBreedsGapLength(@RequestParam(required = false) int len){
-		return new ResponseEntity<>(catBreedService.findGapLength(len), HttpStatus.OK);
-	}
-
-	@GetMapping("/breeds/gapweight")
-	public ResponseEntity<List<CatBreedDto>> getBreedsGapWeight(@RequestParam(required = false) int w){
-		return new ResponseEntity<>(catBreedService.findGapWeight(w), HttpStatus.OK);
 	}
 
 

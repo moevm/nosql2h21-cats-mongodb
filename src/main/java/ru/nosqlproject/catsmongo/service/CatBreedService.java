@@ -13,24 +13,10 @@ public interface CatBreedService {
 
     void addNewBreed(CatBreedDto catBreed);
 
-    List<CatBreedDto> searchBreedByParams(Map<String, String> params);
-
     List<CatBreedDto> findAll();
     List<CatBreedDto> findAllPagination(int page, int size);
 
-    List<CatBreed> importDB();
-
-    CatBreedDto findByName(String name);
-
-    List<CatBreedDto> findByLife(int from, int to);
-
     CatBreedDto findById(String id);
-
-    List<CatBreedDto> findBreedsByRegexpName(String reg);
-
-    List<CatBreedDto> findGapLength(int len);
-
-    List<CatBreedDto> findGapWeight(int weight);
 
     Map<String, Object> loadDb(List<CatBreedDto> breeds);
 

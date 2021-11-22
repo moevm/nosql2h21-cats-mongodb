@@ -15,17 +15,4 @@ import java.util.Optional;
 //, CustomCatBreedRepository
 public interface CatBreedRepository extends MongoRepository<CatBreed, Long> {
 
-    @Query(fields = "{'_id': 0}")
-    CatBreed findByName(final String name);
-
-    List<CatBreed> findByAverageLifespanBetween(int from, int to);
-
-    @Query(value = "{'name': {$regex: ?0 , $options: 'i'} }", fields = "{'_id': 0}")
-    List<CatBreed> findByRegexName(String reg);
-
-    @Query("{$and: [{'length.from': {$lte: ?0} }, {'length.to': {$gte: ?0} }] }")
-    List<CatBreed> findGapLength(int len);
-
-    @Query("{$and: [{'weight.from': {$lte: ?0} }, {'weight.to': {$gte: ?0} }] }")
-    List<CatBreed> findGapWeight(int w);
 }
