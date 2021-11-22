@@ -97,6 +97,12 @@ public class MainController {
 		return new ResponseEntity<>(catBreedService.findGapLength(len), HttpStatus.OK);
 	}
 
+	@GetMapping("/breeds/gapweight")
+	public ResponseEntity<List<CatBreedDto>> getBreedsGapWeight(@RequestParam(required = false) int w){
+		return new ResponseEntity<>(catBreedService.findGapWeight(w), HttpStatus.OK);
+	}
+
+
 	@GetMapping("/breed")
 	public ResponseEntity<List<?>> getAllBreedsByFilter(@RequestParam(required = false) Map<String, Object> params) {
 		System.out.println(params);

@@ -23,4 +23,7 @@ public interface CatBreedRepository extends MongoRepository<CatBreed, Long> {
     @Query("{$and: [{'length.from': {$lte: ?0} }, {'length.to': {$gte: ?0} }] }")
     List<CatBreed> findGapLength(int len);
 
+    @Query("{$and: [{'weight.from': {$lte: ?0} }, {'weight.to': {$gte: ?0} }] }")
+    List<CatBreed> findGapWeight(int w);
+
 }

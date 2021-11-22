@@ -26,4 +26,6 @@ public interface CatBreedService {
     List<CatBreedDto> findBreedsByRegexpName(String reg);
 
     List<CatBreedDto> findGapLength(int len);
+
+    List<CatBreedDto> findGapWeight(int weight);
 }
