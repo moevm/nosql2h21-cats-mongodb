@@ -79,7 +79,7 @@ public class MainController {
 	}
 
 
-	@GetMapping("/breed/{id}")
+	@GetMapping("/breedid/{id}")
 	public ResponseEntity<CatBreedDto> getBreedById(@PathVariable("id") String id){
 		CatBreedDto catBreedDto = catBreedService.findById(id);
 		if (catBreedDto == null){
@@ -117,9 +117,13 @@ public class MainController {
 
 
 	@GetMapping("/breed")
-	public ResponseEntity<List<?>> getAllBreedsByFilter(@RequestParam(required = false) Map<String, Object> params) {
-		System.out.println(params);
-		return ResponseEntity.ok().body(List.of());
+	public ResponseEntity<List<CatBreedDto>> getAllBreedsByFilter(@RequestParam(required = false) Map<String, Object> params) {
+		List<CatBreedDto> res = catBreedService.findByFilters(params);
+		if (res == null){
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(res, HttpStatus.OK);
+		//return ResponseEntity.ok().body(List.of());
 	}
 
 

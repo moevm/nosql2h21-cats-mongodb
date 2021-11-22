@@ -9,6 +9,8 @@ import java.util.Optional;
 
 public interface CatBreedService {
 
+    List<CatBreedDto> findByFilters(Map<String, Object> param);
+
     void addNewBreed(CatBreedDto catBreed);
 
     List<CatBreedDto> searchBreedByParams(Map<String, String> params);

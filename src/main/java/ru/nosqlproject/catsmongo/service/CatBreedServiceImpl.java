@@ -4,9 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.nosqlproject.catsmongo.dto.CatBreedDto;
 import ru.nosqlproject.catsmongo.entity.CatBreed;
@@ -21,11 +18,13 @@ public class CatBreedServiceImpl implements CatBreedService{
 
     private final CatBreedRepository catBreedRepository;
     private final CatBreedMapper catBreedMapper;
+    private final CustomCatBreedRepositoryImpl customCatBreedRepository;
 
     @Autowired
-    public CatBreedServiceImpl(CatBreedRepository catBreedRepository, CatBreedMapper catBreedMapper){
+    public CatBreedServiceImpl(CatBreedRepository catBreedRepository, CatBreedMapper catBreedMapper, CustomCatBreedRepositoryImpl customCatBreedRepository){
         this.catBreedRepository = catBreedRepository;
         this.catBreedMapper = catBreedMapper;
+        this.customCatBreedRepository = customCatBreedRepository;
     }
 
     private List<CatBreedDto> catBreedDtoListFromBreed(List<CatBreed> catBreeds){
@@ -36,9 +35,20 @@ public class CatBreedServiceImpl implements CatBreedService{
         return dtoRes;
     }
 
+    @Override
+    public List<CatBreedDto> findByFilters(Map<String, Object> param) {
+        try{
+            List<CatBreed> catBreeds = customCatBreedRepository.CustomCatBreedMethod(param);
+            return catBreedDtoListFromBreed(catBreeds);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
     /*
-    if duplicate? maybe return some response-exception
-     */
+        if duplicate? maybe return some response-exception
+         */
     @Override
     public void addNewBreed(CatBreedDto catBreed) {
         /*
