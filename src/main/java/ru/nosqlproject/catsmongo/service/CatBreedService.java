@@ -14,6 +14,7 @@ public interface CatBreedService {
     List<CatBreedDto> searchBreedByParams(Map<String, String> params);
 
     List<CatBreedDto> findAll();
+    List<CatBreedDto> findAllPagination(int page, int size);
 
     List<CatBreed> importDB();
 

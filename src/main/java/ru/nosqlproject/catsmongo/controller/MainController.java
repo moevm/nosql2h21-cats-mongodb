@@ -61,10 +61,23 @@ public class MainController {
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
+	/*
 	@GetMapping("/breeds")
 	public ResponseEntity<List<CatBreedDto>> getAllBreeds(){
 		return new ResponseEntity<>(catBreedService.findAll(), HttpStatus.OK);
+	} */
+
+	@GetMapping("/breeds")
+	public ResponseEntity<List<CatBreedDto>> getAllBreeds(@RequestParam(defaultValue = "0") int page,
+														  @RequestParam(defaultValue = "5") int size){
+		List<CatBreedDto> res = catBreedService.findAllPagination(page, size);
+		if (res == null){
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		} else{
+			return new ResponseEntity<>(res, HttpStatus.OK);
+		}
 	}
+
 
 	@GetMapping("/breed/{id}")
 	public ResponseEntity<CatBreedDto> getBreedById(@PathVariable("id") String id){

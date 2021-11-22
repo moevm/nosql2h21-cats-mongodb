@@ -1,6 +1,9 @@
 package ru.nosqlproject.catsmongo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -9,6 +12,7 @@ import ru.nosqlproject.catsmongo.entity.CatBreed;
 import ru.nosqlproject.catsmongo.mapping.CatBreedMapper;
 import ru.nosqlproject.catsmongo.repository.CatBreedRepository;
 
+//import java.awt.print.Pageable;
 import java.util.*;
 
 @Service
@@ -131,6 +135,18 @@ public class CatBreedServiceImpl implements CatBreedService{
     @Override
     public List<CatBreedDto> findAll() {
         return catBreedDtoListFromBreed(catBreedRepository.findAll());
+    }
+
+    @Override
+    public List<CatBreedDto> findAllPagination(int page, int size) {
+        try{
+            Pageable paging = PageRequest.of(page, size);
+            Page<CatBreed> catBreedPage;
+            catBreedPage = catBreedRepository.findAll(paging);
+            return catBreedDtoListFromBreed(catBreedPage.getContent());
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
