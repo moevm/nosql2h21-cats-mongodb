@@ -121,10 +121,10 @@ public class MainController {
 		}
 	}
 
-/*	@GetMapping("/db")
-	public List<CatBreed> importDB() {
-		return catBreedService.importDB();
-	}*/
+	@GetMapping("/db")
+	public List<CatBreedDto> exportDB() {
+		return catBreedService.exportDB();
+	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> handleException(MethodArgumentNotValidException ex) {

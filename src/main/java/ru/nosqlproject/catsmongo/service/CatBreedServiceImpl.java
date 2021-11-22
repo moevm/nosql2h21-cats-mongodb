@@ -114,6 +114,16 @@ public class CatBreedServiceImpl implements CatBreedService{
     }
 
     @Override
+    public List<CatBreedDto> exportDB() {
+        List<CatBreed> catBreeds = catBreedRepository.findAll();
+        List<CatBreedDto> catBreedDtoList = new ArrayList<CatBreedDto>();
+        for (CatBreed val: catBreeds) {
+            catBreedDtoList.add(catBreedMapper.mapToDto(val));
+        }
+        return catBreedDtoList;
+    }
+
+    @Override
     public List<CatBreedDto> searchBreedByParams(Map<String, String> params) {
         return null;
     }
