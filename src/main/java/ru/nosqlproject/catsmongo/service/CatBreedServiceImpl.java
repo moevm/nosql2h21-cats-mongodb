@@ -26,6 +26,14 @@ public class CatBreedServiceImpl implements CatBreedService{
         this.catBreedMapper = catBreedMapper;
     }
 
+    private List<CatBreedDto> catBreedDtoListFromBreed(List<CatBreed> catBreeds){
+        List<CatBreedDto> dtoRes = new ArrayList<CatBreedDto>();
+        for (CatBreed val: catBreeds) {
+            dtoRes.add(catBreedMapper.mapToDto(val));
+        }
+        return dtoRes;
+    }
+
     /*
     if duplicate? maybe return some response-exception
      */
@@ -42,17 +50,19 @@ public class CatBreedServiceImpl implements CatBreedService{
 
     @Override
     public CatBreedDto findByName(String name) {
-        return catBreedMapper.mapToDto(catBreedRepository.findByName(name));
+        CatBreed catBreed = catBreedRepository.findByName(name);
+        try{
+            CatBreedDto catBreedDto = catBreedMapper.mapToDto(catBreed);
+            return catBreedDto;
+        } catch (Exception e){
+            return null;
+        }
     }
 
     @Override
     public List<CatBreedDto> findByLife(int from, int to) {
         List<CatBreed> res = catBreedRepository.findByAverageLifespanBetween(from, to);
-        List<CatBreedDto> dtoRes = new ArrayList<CatBreedDto>();
-        for (CatBreed val: res) {
-            dtoRes.add(catBreedMapper.mapToDto(val));
-        }
-        return dtoRes;
+        return catBreedDtoListFromBreed(res);
     }
 
     @Override
@@ -82,20 +92,12 @@ public class CatBreedServiceImpl implements CatBreedService{
 
     @Override
     public List<CatBreedDto> findGapLength(int len) {
-        List<CatBreedDto> dto = new ArrayList<CatBreedDto>();
-        for (CatBreed val: catBreedRepository.findGapLength(len)) {
-            dto.add(catBreedMapper.mapToDto(val));
-        }
-        return dto;
+        return catBreedDtoListFromBreed(catBreedRepository.findGapLength(len));
     }
 
     @Override
     public List<CatBreedDto> findGapWeight(int w) {
-        List<CatBreedDto> dto = new ArrayList<CatBreedDto>();
-        for (CatBreed val: catBreedRepository.findGapWeight(w)) {
-            dto.add(catBreedMapper.mapToDto(val));
-        }
-        return dto;
+        return catBreedDtoListFromBreed(catBreedRepository.findGapWeight(w));
     }
 
     @Override
@@ -105,12 +107,7 @@ public class CatBreedServiceImpl implements CatBreedService{
 
     @Override
     public List<CatBreedDto> findAll() {
-        List<CatBreed> res = catBreedRepository.findAll();
-        List<CatBreedDto> dtoRes = new ArrayList<CatBreedDto>();
-        for (CatBreed val: res) {
-            dtoRes.add(catBreedMapper.mapToDto(val));
-        }
-        return dtoRes;
+        return catBreedDtoListFromBreed(catBreedRepository.findAll());
     }
 
     @Override
