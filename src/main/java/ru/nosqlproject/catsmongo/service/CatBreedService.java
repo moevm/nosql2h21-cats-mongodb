@@ -14,9 +14,10 @@ public interface CatBreedService {
     void addNewBreed(CatBreedDto catBreed);
 
     List<CatBreedDto> findAll();
+
     List<CatBreedDto> findAllPagination(int page, int size);
 
-    CatBreedDto findById(String id);
+    Optional<CatBreedDto> findById(String id);
 
     Map<String, Object> loadDb(List<CatBreedDto> breeds);
 

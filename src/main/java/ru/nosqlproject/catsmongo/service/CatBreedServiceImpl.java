@@ -1,5 +1,6 @@
 package ru.nosqlproject.catsmongo.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,22 +15,15 @@ import ru.nosqlproject.catsmongo.repository.CatBreedRepository;
 import java.util.*;
 
 @Service
-public class CatBreedServiceImpl implements CatBreedService{
+@RequiredArgsConstructor
+public class CatBreedServiceImpl implements CatBreedService {
 
     private final CatBreedRepository catBreedRepository;
     private final CatBreedMapper catBreedMapper;
-    private final CustomCatBreedRepositoryImpl customCatBreedRepository;
 
-    @Autowired
-    public CatBreedServiceImpl(CatBreedRepository catBreedRepository, CatBreedMapper catBreedMapper, CustomCatBreedRepositoryImpl customCatBreedRepository){
-        this.catBreedRepository = catBreedRepository;
-        this.catBreedMapper = catBreedMapper;
-        this.customCatBreedRepository = customCatBreedRepository;
-    }
-
-    private List<CatBreedDto> catBreedDtoListFromBreed(List<CatBreed> catBreeds){
-        List<CatBreedDto> dtoRes = new ArrayList<CatBreedDto>();
-        for (CatBreed val: catBreeds) {
+    private List<CatBreedDto> catBreedDtoListFromBreed(List<CatBreed> catBreeds) {
+        List<CatBreedDto> dtoRes = new ArrayList<>();
+        for (CatBreed val : catBreeds) {
             dtoRes.add(catBreedMapper.mapToDto(val));
         }
         return dtoRes;
@@ -37,10 +31,10 @@ public class CatBreedServiceImpl implements CatBreedService{
 
     @Override
     public List<CatBreedDto> findByFilters(Map<String, Object> param) {
-        try{
-            List<CatBreed> catBreeds = customCatBreedRepository.CustomCatBreedMethod(param);
+        try {
+            List<CatBreed> catBreeds = catBreedRepository.CustomCatBreedMethod(param);
             return catBreedDtoListFromBreed(catBreeds);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
         }
@@ -61,18 +55,13 @@ public class CatBreedServiceImpl implements CatBreedService{
     }
 
     @Override
-    public CatBreedDto findById(String id) {
-        Long _id;
-        try{
-            _id = Long.parseLong(id);
-        } catch (Exception e){
-            return null;
-        }
-        Optional<CatBreed> catBreed = catBreedRepository.findById(_id);
-        if (catBreed.isPresent()){
-            return catBreedMapper.mapToDto(catBreed.get());
-        } else {
-            return null;
+    public Optional<CatBreedDto> findById(String id) {
+        try {
+            return catBreedRepository.findById(
+                    Long.parseLong(id)).map(catBreedMapper::mapToDto);
+
+        } catch (NumberFormatException ex) {
+            return Optional.empty();
         }
     }
 
@@ -82,22 +71,22 @@ public class CatBreedServiceImpl implements CatBreedService{
         long before = catBreedRepository.count();
         Map<String, Object> response = new HashMap<>();
         List<CatBreed> catBreeds = new ArrayList<CatBreed>();
-        for (CatBreedDto val:breeds) {
+        for (CatBreedDto val : breeds) {
             catBreeds.add(catBreedMapper.mapToEntity(val));
         }
         catBreedRepository.saveAll(catBreeds);
         long after = catBreedRepository.count();
         response.put("size_before", before);
         response.put("size_after", after);
-        response.put("add", after-before);
+        response.put("add", after - before);
         return response;
     }
 
     @Override
     public List<CatBreedDto> exportDB() {
         List<CatBreed> catBreeds = catBreedRepository.findAll();
-        List<CatBreedDto> catBreedDtoList = new ArrayList<CatBreedDto>();
-        for (CatBreed val: catBreeds) {
+        List<CatBreedDto> catBreedDtoList = new ArrayList<>();
+        for (CatBreed val : catBreeds) {
             catBreedDtoList.add(catBreedMapper.mapToDto(val));
         }
         return catBreedDtoList;
@@ -113,7 +102,7 @@ public class CatBreedServiceImpl implements CatBreedService{
      */
     @Override
     public List<CatBreedDto> findAllPagination(int page, int size) {
-        try{
+        try {
             Pageable paging = PageRequest.of(page, size);
             Page<CatBreed> catBreedPage;
             catBreedPage = catBreedRepository.findAll(paging);

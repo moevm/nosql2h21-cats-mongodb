@@ -23,12 +23,11 @@ import java.util.*;
 @RequiredArgsConstructor
 public class MainController {
 
-	@Autowired
-	private final CatBreedService catBreedService;
+    private final CatBreedService catBreedService;
 
-	@PostMapping("/breed")
-	@ResponseStatus(HttpStatus.ACCEPTED)
-	public void addBread(@RequestBody @Valid CatBreedDto catBreed) {
+    @PostMapping("/breed")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void addBread(@RequestBody @Valid CatBreedDto catBreed) {
 		/*
 			maybe some response if exception
 		 */
@@ -40,9 +39,9 @@ public class MainController {
 			return new ResponseEntity<>(catBreed, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		 */
-		catBreedService.addNewBreed(catBreed);
-		//System.out.println("Breed is ok");
-	}
+        catBreedService.addNewBreed(catBreed);
+        //System.out.println("Breed is ok");
+    }
 
 	/*
 	@GetMapping("/breeds")
@@ -50,63 +49,61 @@ public class MainController {
 		return new ResponseEntity<>(catBreedService.findAll(), HttpStatus.OK);
 	} */
 
-	@GetMapping("/breeds")
-	public ResponseEntity<List<CatBreedDto>> getAllBreeds(@RequestParam(defaultValue = "0") int page,
-														  @RequestParam(defaultValue = "5") int size){
-		List<CatBreedDto> res = catBreedService.findAllPagination(page, size);
-		if (res == null){
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-		} else{
-			return new ResponseEntity<>(res, HttpStatus.OK);
-		}
-	}
+    @GetMapping("/breeds")
+    public ResponseEntity<List<CatBreedDto>> getAllBreeds(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+        List<CatBreedDto> res = catBreedService.findAllPagination(page, size);
+        if (res == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(res, HttpStatus.OK);
+        }
+    }
 
-	@GetMapping("/breedid/{id}")
-	public ResponseEntity<CatBreedDto> getBreedById(@PathVariable("id") String id){
-		CatBreedDto catBreedDto = catBreedService.findById(id);
-		if (catBreedDto == null){
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		} else{
-			return new ResponseEntity<>(catBreedDto, HttpStatus.OK);
-		}
-	}
+    @GetMapping("/breed/{id}")
+    public ResponseEntity<CatBreedDto> getBreedById(@PathVariable("id") String id) {
+        return catBreedService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.badRequest().build());
+    }
 
 
-	@GetMapping("/breed")
-	public ResponseEntity<List<CatBreedDto>> getAllBreedsByFilter(@RequestParam(required = false) Map<String, Object> params) {
-		List<CatBreedDto> res = catBreedService.findByFilters(params);
-		if (res == null){
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		return new ResponseEntity<>(res, HttpStatus.OK);
-		//return ResponseEntity.ok().body(List.of());
-	}
+    @GetMapping("/breed")
+    public ResponseEntity<List<CatBreedDto>> getAllBreedsByFilter(
+            @RequestParam(required = false) Map<String, Object> params) {
+        List<CatBreedDto> res = catBreedService.findByFilters(params);
+        if (res == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
 
 
-	@PostMapping("/breeds")
-	// @ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Map<String, Object>> loadNewDB(@RequestBody List<@Valid CatBreedDto> cats) {
-		try{
-			Map<String, Object> response = catBreedService.loadDb(cats);
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		} catch (Exception e){
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+    @PostMapping("/breeds")
+    public ResponseEntity<Map<String, Object>> loadNewDB(
+            @RequestBody List<@Valid CatBreedDto> cats) {
+        try {
+            Map<String, Object> response = catBreedService.loadDb(cats);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
-	@GetMapping("/db")
-	public List<CatBreedDto> exportDB() {
-		return catBreedService.exportDB();
-	}
+    @GetMapping("/db")
+    public List<CatBreedDto> exportDB() {
+        return catBreedService.exportDB();
+    }
 
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> handleException(MethodArgumentNotValidException ex) {
-		Map<String, String> errors = new HashMap<>();
-		ex.getBindingResult().getAllErrors().forEach((error) -> {
-			String fieldName = ((FieldError) error).getField();
-			String errorMessage = error.getDefaultMessage();
-			errors.put(fieldName, errorMessage);
-		});
-		return ResponseEntity.badRequest().body(errors);
-	}
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Object> handleException(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return ResponseEntity.badRequest().body(errors);
+    }
 }

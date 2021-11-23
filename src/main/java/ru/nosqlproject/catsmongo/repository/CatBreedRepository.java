@@ -9,10 +9,6 @@ import ru.nosqlproject.catsmongo.entity.CatBreed;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * @author Kirill Mololkin Kirill-mol 10.09.2021
- */
-//, CustomCatBreedRepository
-public interface CatBreedRepository extends MongoRepository<CatBreed, Long> {
+public interface CatBreedRepository extends MongoRepository<CatBreed, Long>, CustomCatBreedRepository {
 
 }
