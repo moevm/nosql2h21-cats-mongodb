@@ -1,4 +1,4 @@
-import {Breed} from './../models/breed.model';
+import {BreedsArray} from './../types/breeds-array.type';
 import {Injectable} from '@angular/core';
 import {Observable, ReplaySubject} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -7,9 +7,26 @@ import {map} from 'rxjs/operators';
     providedIn: 'root',
 })
 export class StoreService {
-    private readonly breeds$ = new ReplaySubject<ReadonlyArray<Breed>>(1);
+    private readonly _breeds$ = new ReplaySubject<BreedsArray>(1);
+    private readonly _searchResult$ = new ReplaySubject<BreedsArray>(1);
+
+    get breeds$(): Observable<BreedsArray> {
+        return this._breeds$.asObservable();
+    }
 
     get breedsCount$(): Observable<number> {
-        return this.breeds$.pipe(map(breeds => breeds.length));
+        return this._breeds$.pipe(map(breeds => breeds.length));
+    }
+
+    get searchResult$(): Observable<BreedsArray> {
+        return this._searchResult$.asObservable();
+    }
+
+    dispatchBreeds(breeds: BreedsArray) {
+        this._breeds$.next(breeds);
+    }
+
+    dispatchSearchResult(results: BreedsArray) {
+        this._searchResult$.next(results);
     }
 }
