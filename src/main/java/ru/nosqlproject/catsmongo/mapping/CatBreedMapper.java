@@ -1,5 +1,7 @@
 package ru.nosqlproject.catsmongo.mapping;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 import ru.nosqlproject.catsmongo.dto.CatBreedDto;
 import ru.nosqlproject.catsmongo.entity.CatBreed;
@@ -10,7 +12,7 @@ import ru.nosqlproject.catsmongo.entity.CatBreed;
 @Component
 public class CatBreedMapper {
 
-    public CatBreedDto mapToDto(CatBreed catBreed) {
+    public CatBreedDto fromEntity(CatBreed catBreed) {
         return CatBreedDto.builder()
                 .name(catBreed.getName())
                 .origin(catBreed.getOrigin())
@@ -23,7 +25,7 @@ public class CatBreedMapper {
                 .build();
     }
 
-    public CatBreed mapToEntity(CatBreedDto catBreedDto) {
+    public CatBreed toEntity(CatBreedDto catBreedDto) {
         return CatBreed.builder()
                 .name(catBreedDto.getName())
                 .origin(catBreedDto.getOrigin())
@@ -34,5 +36,13 @@ public class CatBreedMapper {
                 .description(catBreedDto.getDescription())
                 .images(catBreedDto.getImages())
                 .build();
+    }
+
+    public List<CatBreedDto> fromEntityList(List<CatBreed> list) {
+        return list.stream().map(this::fromEntity).collect(Collectors.toList());
+    }
+
+    public List<CatBreed> toEntityList(List<CatBreedDto> list) {
+        return list.stream().map(this::toEntity).collect(Collectors.toList());
     }
 }
