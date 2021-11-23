@@ -11,7 +11,7 @@ public interface CatBreedService {
 
     List<CatBreedDto> findByFilters(Map<String, Object> param);
 
-    void addNewBreed(CatBreedDto catBreed);
+    boolean addNewBreed(CatBreedDto catBreed);
 
     List<CatBreedDto> findAll();
 

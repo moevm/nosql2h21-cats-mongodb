@@ -44,14 +44,13 @@ public class CatBreedServiceImpl implements CatBreedService {
         if duplicate? maybe return some response-exception
          */
     @Override
-    public void addNewBreed(CatBreedDto catBreed) {
-        /*
-        CatBreed tmp = catBreedRepository.findByName(catBreed.getName());
+    public boolean addNewBreed(CatBreedDto catBreed) {
+        CatBreed tmp = catBreedRepository.findCatBreedByName(catBreed.getName());
         if (tmp != null){
-            return new Exception();
+            return false;
         }
-         */
         catBreedRepository.save(catBreedMapper.mapToEntity(catBreed));
+        return true;
     }
 
     @Override

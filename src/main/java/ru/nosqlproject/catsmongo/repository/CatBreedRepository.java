@@ -11,4 +11,7 @@ import java.util.Optional;
 
 public interface CatBreedRepository extends MongoRepository<CatBreed, Long>, CustomCatBreedRepository {
 
+    CatBreed findCatBreedByName(String name);
+
+    CatBreed findCatBreedByNameLike(String name);
 }
