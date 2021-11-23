@@ -1,7 +1,10 @@
-mongodb:
-  host: ${DB_HOST:localhost}
-  port: ${DB_PORT:27017}
-  database: cats
+spring:
+  data:
+    mongodb:
+      host: ${DB_HOST:localhost}
+      port: ${DB_PORT:27017}
+      database: cats
+      auto-index-creation: true
 
 server:
   port: ${PORT:8080}

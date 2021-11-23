@@ -1,6 +1,8 @@
 package ru.nosqlproject.catsmongo.mapping;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 import ru.nosqlproject.catsmongo.dto.CatBreedDto;
@@ -32,9 +34,13 @@ public class CatBreedMapper {
                 .averageLifespan(catBreedDto.getAverageLifespan())
                 .weight(catBreedDto.getWeight())
                 .length(catBreedDto.getLength())
-                .characteristics(catBreedDto.getCharacteristics())
-                .description(catBreedDto.getDescription())
-                .images(catBreedDto.getImages())
+                .characteristics(Optional.ofNullable(catBreedDto.getCharacteristics())
+                        .orElse(Collections.emptyMap())
+                )
+                .description(Optional.ofNullable(catBreedDto.getDescription()).orElse(""))
+                .images(Optional.ofNullable(catBreedDto.getImages())
+                        .orElse(Collections.emptyList())
+                )
                 .build();
     }
 

@@ -39,7 +39,7 @@ public class CatBreedServiceImpl implements CatBreedService {
     public boolean addNewBreed(CatBreedDto catBreed) {
         Optional<CatBreed> tmp = catBreedRepository.findCatBreedByName(catBreed.getName());
 
-        if (tmp.isEmpty()) {
+        if (tmp.isPresent()) {
             return false;
         }
 
@@ -64,7 +64,9 @@ public class CatBreedServiceImpl implements CatBreedService {
     public Map<String, Object> loadDb(List<CatBreedDto> breeds) {
         long before = catBreedRepository.count();
 
-        long after = catBreedRepository.saveAll(catBreedMapper.toEntityList(breeds)).size();
+        catBreedRepository.saveAll(catBreedMapper.toEntityList(breeds));
+
+        long after = catBreedRepository.count();
 
         Map<String, Object> response = new HashMap<>();
 

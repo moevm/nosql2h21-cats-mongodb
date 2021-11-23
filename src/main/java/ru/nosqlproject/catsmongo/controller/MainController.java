@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -32,7 +33,7 @@ public class MainController {
     @PostMapping("/breed")
     public ResponseEntity<?> addBread(@RequestBody @Valid CatBreedDto catBreed) {
         if (!catBreedService.addNewBreed(catBreed)) {
-            return ResponseEntity.badRequest().body("Duplicate origin");
+            return ResponseEntity.badRequest().body("Duplicate name");
         } else {
             return ResponseEntity.accepted().build();
         }
@@ -70,15 +71,18 @@ public class MainController {
 
 
     @PostMapping("/breeds")
-    public ResponseEntity<Map<String, Object>> loadNewDB(
+    public ResponseEntity<?> loadNewDB(
             @RequestBody List<@Valid CatBreedDto> cats
     ) {
         try {
             Map<String, Object> response = catBreedService.loadDb(cats);
 
             return ResponseEntity.ok(response);
+
+        } catch (DuplicateKeyException e) {
+            return ResponseEntity.badRequest().body("Duplicate name");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
