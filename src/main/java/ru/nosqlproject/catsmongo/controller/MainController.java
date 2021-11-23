@@ -54,11 +54,7 @@ public class MainController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size) {
         List<CatBreedDto> res = catBreedService.findAllPagination(page, size);
-        if (res == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(res, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @GetMapping("/breed/{id}")
@@ -73,9 +69,6 @@ public class MainController {
     public ResponseEntity<List<CatBreedDto>> getAllBreedsByFilter(
             @RequestParam(required = false) Map<String, Object> params) {
         List<CatBreedDto> res = catBreedService.findByFilters(params);
-        if (res == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 

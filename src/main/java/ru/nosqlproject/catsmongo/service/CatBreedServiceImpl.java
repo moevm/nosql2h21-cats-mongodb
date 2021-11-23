@@ -36,7 +36,7 @@ public class CatBreedServiceImpl implements CatBreedService {
             return catBreedDtoListFromBreed(catBreeds);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return null;
+            return new ArrayList<>();
         }
     }
 
@@ -108,7 +108,7 @@ public class CatBreedServiceImpl implements CatBreedService {
             catBreedPage = catBreedRepository.findAll(paging);
             return catBreedDtoListFromBreed(catBreedPage.getContent());
         } catch (Exception e) {
-            return null;
+            return new ArrayList<>();
         }
     }
 

@@ -1,4 +1,4 @@
-package ru.nosqlproject.catsmongo.service;
+package ru.nosqlproject.catsmongo.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
