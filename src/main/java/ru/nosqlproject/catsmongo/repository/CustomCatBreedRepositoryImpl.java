@@ -36,6 +36,7 @@ public class CustomCatBreedRepositoryImpl implements CustomCatBreedRepository {
                     .regex(param.get("origin").toString(), "i"));
         }
 
+
         if (param.containsKey("averageLifespanFrom")) {
             query.addCriteria(Criteria.where("averageLifespan")
                     .gte(Integer.parseInt(param.get("averageLifespanFrom").toString())));
@@ -46,6 +47,22 @@ public class CustomCatBreedRepositoryImpl implements CustomCatBreedRepository {
                     .lte(Integer.parseInt(param.get("averageLifespanTo").toString())));
         }
 
+        if (param.containsKey("lengthFrom") && param.containsKey("lengthTo")){
+            query.addCriteria(new Criteria().orOperator(Criteria.where("length.from")
+                    .lte(Integer.parseInt(param.get("lengthTo").toString())),
+                    Criteria.where("length.to")
+                            .gte(Integer.parseInt(param.get("lengthFrom").toString()))));
+
+        } else if (param.containsKey("lengthTo")){
+            query.addCriteria(new Criteria().andOperator(
+                    Criteria.where("length.from").lte(Integer.parseInt(param.get("lengthTo").toString())),
+                    Criteria.where("length.to").gte(Integer.parseInt(param.get("lengthTo").toString()))
+            ));
+        } else if (param.containsKey("lengthFrom")){
+            query.addCriteria(Criteria.where("length.to")
+                    .gte(Integer.parseInt(param.get("lengthFrom").toString())));
+        }
+/*
         if (param.containsKey("lengthFrom")) {
             query.addCriteria(Criteria.where("length.from")
                     .gte(Integer.parseInt(param.get("lengthFrom").toString())));
@@ -55,7 +72,7 @@ public class CustomCatBreedRepositoryImpl implements CustomCatBreedRepository {
             query.addCriteria(Criteria.where("length.to")
                     .lte(Integer.parseInt(param.get("lengthTo").toString())));
         }
-
+*/
         if (param.containsKey("weightFrom")) {
             query.addCriteria(Criteria.where("weight.from")
                     .gte(Integer.parseInt(param.get("weightFrom").toString())));
