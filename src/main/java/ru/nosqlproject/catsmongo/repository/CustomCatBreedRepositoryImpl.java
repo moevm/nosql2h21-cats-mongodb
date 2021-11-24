@@ -48,22 +48,22 @@ public class CustomCatBreedRepositoryImpl implements CustomCatBreedRepository {
 
         if (param.containsKey("lengthFrom")) {
             query.addCriteria(Criteria.where("length.from")
-                    .is(Integer.parseInt(param.get("lengthFrom").toString())));
+                    .gte(Integer.parseInt(param.get("lengthFrom").toString())));
         }
 
         if (param.containsKey("lengthTo")) {
-            query.addCriteria(Criteria.where("length.from")
-                    .is(Integer.parseInt(param.get("lengthTo").toString())));
+            query.addCriteria(Criteria.where("length.to")
+                    .lte(Integer.parseInt(param.get("lengthTo").toString())));
         }
 
         if (param.containsKey("weightFrom")) {
             query.addCriteria(Criteria.where("weight.from")
-                    .is(Integer.parseInt(param.get("weightFrom").toString())));
+                    .gte(Integer.parseInt(param.get("weightFrom").toString())));
         }
 
         if (param.containsKey("weightTo")) {
             query.addCriteria(Criteria.where("weight.to")
-                    .is(Integer.parseInt(param.get("weightTo").toString())));
+                    .lte(Integer.parseInt(param.get("weightTo").toString())));
         }
 
         if (param.containsKey("gentlenessTo")) {
@@ -77,12 +77,12 @@ public class CustomCatBreedRepositoryImpl implements CustomCatBreedRepository {
         }
 
         if (param.containsKey("immunityTo")) {
-            query.addCriteria(Criteria.where("characteristics.gentleness")
+            query.addCriteria(Criteria.where("characteristics.immunity")
                     .lte(Integer.parseInt(param.get("immunityTo").toString())));
         }
 
         if (param.containsKey("immunityFrom")) {
-            query.addCriteria(Criteria.where("characteristics.gentleness")
+            query.addCriteria(Criteria.where("characteristics.immunity")
                     .gte(Integer.parseInt(param.get("immunityFrom").toString())));
         }
 
