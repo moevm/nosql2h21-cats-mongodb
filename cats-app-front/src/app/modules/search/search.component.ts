@@ -1,8 +1,12 @@
-import {take} from 'rxjs/operators';
+import {Filter} from './../../interfaces/filter.interface';
+import {BreedsService} from './../../services/breeds.service';
+import {debounceTime, filter, take, map} from 'rxjs/operators';
 import {StoreService} from './../../services/store.service';
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {concat} from 'rxjs';
+import {removeNullKeys} from 'src/app/utils/remove-null-keys.util';
+import {generateMocks} from 'src/app/mocks/breeds.mock';
 
 const characteristicValidators = [Validators.min(1), Validators.max(10)];
 
@@ -15,6 +19,7 @@ export class SearchComponent implements OnInit {
     readonly filterForm = new FormGroup({
         name: new FormControl(null, []),
         origin: new FormControl(null, []),
+        description: new FormControl(null, []),
         averageLifespanFrom: new FormControl(null, [Validators.min(1)]),
         averageLifespanTo: new FormControl(null, [Validators.min(1)]),
         lengthFrom: new FormControl(null, [Validators.min(1)]),
@@ -46,12 +51,26 @@ export class SearchComponent implements OnInit {
 
     filterShow = false;
 
-    constructor(private readonly store: StoreService) {}
+    private get valid(): boolean {
+        return this.filterForm.valid;
+    }
+
+    constructor(
+        private readonly store: StoreService,
+        private readonly breedsService: BreedsService,
+    ) {}
 
     ngOnInit() {
-        
-        this.filterForm.valueChanges.subscribe(v => console.log(v));
-        this.filterForm.statusChanges.subscribe(v => console.log(v));
+        // this.store.dispatchBreeds(generateMocks());
+        this.filterForm.valueChanges
+            .pipe(
+                filter<Filter>(() => this.valid),
+                debounceTime(600),
+                map(filter => removeNullKeys(filter)),
+            )
+            .subscribe(filter => {
+                this.breedsService.search(filter);
+            });
     }
 
     changeFilterVisibilily() {

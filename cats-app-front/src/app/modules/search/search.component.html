@@ -30,7 +30,7 @@
             <h4 class="filter-item__title">Description</h4>
             <input
                 class="filter-item__input filter-item__input_only"
-                formControlName="origin"
+                formControlName="description"
                 type="text"
                 placeholder="Keywords"
             />
@@ -247,7 +247,7 @@
 <div class="result">
     <ng-container *ngIf="searchResult$ | async as result; else noResults">
         <ng-container *ngIf="result.length; else noResults">
-            <app-breeds-table [breeds]="result" class="table"></app-breeds-table>
+            <app-breeds-table [breeds]="result"></app-breeds-table>
         </ng-container>
     </ng-container>
 </div>

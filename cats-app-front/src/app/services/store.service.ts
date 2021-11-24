@@ -23,6 +23,7 @@ export class StoreService {
     }
 
     dispatchBreeds(breeds: BreedsArray) {
+        console.log(breeds);
         this._breeds$.next(breeds);
     }
 
