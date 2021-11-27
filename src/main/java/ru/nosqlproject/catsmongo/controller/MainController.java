@@ -1,43 +1,106 @@
 package ru.nosqlproject.catsmongo.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.nosqlproject.catsmongo.entity.CatBreed;
-import ru.nosqlproject.catsmongo.repository.CatBreadRepository;
-
-import java.util.List;
+import ru.nosqlproject.catsmongo.dto.CatBreedDto;
+import ru.nosqlproject.catsmongo.service.CatBreedService;
 
 /**
  * @author Kirill Mololkin Kirill-mol 10.09.2021
  */
 @RestController
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class MainController {
 
-	private final CatBreadRepository catBreadRepository;
+    private final CatBreedService catBreedService;
 
-	@GetMapping("/")
-	public String greeting() {
-		return "Hello World!";
-	}
+    @PostMapping("/breed")
+    public ResponseEntity<?> addBread(@RequestBody @Valid CatBreedDto catBreed) {
+        if (!catBreedService.addNewBreed(catBreed)) {
+            return ResponseEntity.badRequest().body("Duplicate name");
+        } else {
+            return ResponseEntity.accepted().build();
+        }
+    }
 
-	@GetMapping("/hello")
-	public String greeting1() {
-		return "Hello World!";
-	}
+    @GetMapping("/breeds")
+    public ResponseEntity<List<CatBreedDto>> getAllBreeds(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ) {
+        List<CatBreedDto> res = catBreedService.findAllPagination(page, size);
+        return ResponseEntity.ok(res);
+    }
 
-	@GetMapping("/bread")
-	public ResponseEntity<List<CatBreed>> getAllBreeds() {
-		return ResponseEntity.ok().body(catBreadRepository.findAll());
-	}
+    @GetMapping("/breed/{id}")
+    public ResponseEntity<CatBreedDto> getBreedById(@PathVariable("id") String id) {
+        return catBreedService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.badRequest().build());
+    }
 
-	@PostMapping("/bread")
-	public ResponseEntity<CatBreed> addBread(@RequestBody CatBreed catBreed) {
-		return ResponseEntity.ok().body(catBreadRepository.insert(catBreed));
-	}
+
+    @GetMapping("/breed")
+    public ResponseEntity<List<CatBreedDto>> getAllBreedsByFilter(
+            @RequestParam(required = false) Map<String, Object> params
+    ) {
+        if (params == null) {
+            return ResponseEntity.ok().body(catBreedService.findAll());
+        } else {
+            List<CatBreedDto> res = catBreedService.findByFilters(params);
+
+            return ResponseEntity.ok(res);
+        }
+    }
+
+
+    @PostMapping("/breeds")
+    public ResponseEntity<?> loadNewDB(
+            @RequestBody List<@Valid CatBreedDto> cats
+    ) {
+        try {
+            Map<String, Object> response = catBreedService.loadDb(cats);
+
+            return ResponseEntity.ok(response);
+
+        } catch (DuplicateKeyException e) {
+            return ResponseEntity.badRequest().body("Duplicate name");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/db")
+    public List<CatBreedDto> exportDB() {
+        return catBreedService.exportDB();
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Object> handleException(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+
+        return ResponseEntity.badRequest().body(errors);
+    }
 }
