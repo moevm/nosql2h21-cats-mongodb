@@ -1,3 +1,4 @@
+import { AddBreedModule } from './modules/add-breed/add-breed.module';
 import {SearchModule} from './modules/search/search.module';
 import {ImportModule} from './modules/import/import.module';
 import {ExportModule} from './modules/export/export.module';
@@ -19,6 +20,7 @@ import {HttpClientModule} from '@angular/common/http';
         ExportModule,
         ImportModule,
         SearchModule,
+        AddBreedModule,
         AppRoutingModule,
         HttpClientModule,
     ],

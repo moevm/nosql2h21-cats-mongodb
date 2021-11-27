@@ -6,9 +6,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {concat} from 'rxjs';
 import {removeNullKeys} from 'src/app/utils/remove-null-keys.util';
-import {generateMocks} from 'src/app/mocks/breeds.mock';
-
-const characteristicValidators = [Validators.min(1), Validators.max(10)];
+import {characteristicValidators} from 'src/app/consts/validators.const';
 
 @Component({
     selector: 'app-search',
@@ -19,7 +17,6 @@ export class SearchComponent implements OnInit {
     readonly filterForm = new FormGroup({
         name: new FormControl(null, []),
         origin: new FormControl(null, []),
-        description: new FormControl(null, []),
         averageLifespanFrom: new FormControl(null, [Validators.min(1)]),
         averageLifespanTo: new FormControl(null, [Validators.min(1)]),
         lengthFrom: new FormControl(null, [Validators.min(1)]),
@@ -61,7 +58,6 @@ export class SearchComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        // this.store.dispatchBreeds(generateMocks());
         this.filterForm.valueChanges
             .pipe(
                 filter<Filter>(() => this.valid),
@@ -69,7 +65,7 @@ export class SearchComponent implements OnInit {
                 map(filter => removeNullKeys(filter)),
             )
             .subscribe(filter => {
-                this.breedsService.search(filter);
+                this.breedsService.find(filter);
             });
     }
 

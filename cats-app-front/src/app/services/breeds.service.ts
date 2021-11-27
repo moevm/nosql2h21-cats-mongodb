@@ -1,3 +1,5 @@
+import {Observable} from 'rxjs';
+import {Breed} from './../models/breed.model';
 import {Filter} from '../interfaces/filter.interface';
 import {ApiService} from './api.service';
 import {StoreService} from './store.service';
@@ -9,15 +11,19 @@ import {Injectable} from '@angular/core';
 export class BreedsService {
     constructor(private readonly store: StoreService, private readonly api: ApiService) {}
 
-    getFromApi() {
+    getAll() {
         this.api.getBreeds().subscribe(breeds => {
             this.store.dispatchBreeds(breeds);
         });
     }
 
-    search(params: Filter) {
+    find(params: Filter) {
         this.api.getBreeds(params).subscribe(breeds => {
             this.store.dispatchSearchResult(breeds);
         });
+    }
+
+    add(breed: Breed): Observable<unknown> {
+        return this.api.setBreed(breed);
     }
 }

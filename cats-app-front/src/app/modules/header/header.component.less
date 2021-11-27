@@ -1,4 +1,5 @@
 @import '../../../variables.less';
+@import '../../../mixins.less';
 
 :host {
     position: fixed;
@@ -21,6 +22,7 @@
 
 .menu {
     display: flex;
+    align-items: center;
     gap: 0 50px;
     font-size: 20px;
     font-weight: 500;
@@ -29,6 +31,10 @@
     > a {
         color: @white-100;
         text-decoration: none;
+
+        &.button {
+            .button();
+        }
 
         &:hover {
             color: @orange-100;

@@ -1,3 +1,4 @@
+import {AddBreedComponent} from './modules/add-breed/add-breed.component';
 import {LandingComponent} from './modules/landing/landing.component';
 import {ExportComponent} from './modules/export/export.component';
 import {ImportComponent} from './modules/import/import.component';
@@ -17,6 +18,10 @@ const routes: Routes = [
     {
         path: 'export',
         component: ExportComponent,
+    },
+    {
+        path: 'add',
+        component: AddBreedComponent,
     },
     {
         path: '',

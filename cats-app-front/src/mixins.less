@@ -1,3 +1,5 @@
+@import './variables.less';
+
 .title() {
     display: flex;
     align-items: center;
@@ -18,4 +20,15 @@
     margin-bottom: 48px;
     justify-content: space-between;
     align-items: center;
+}
+
+.button() {
+    padding: 6px 15px;
+    color: @black-100;
+    background: @orange-100;
+
+    &:hover {
+        color: @orange-100;
+        background: @white-100;
+    }
 }
