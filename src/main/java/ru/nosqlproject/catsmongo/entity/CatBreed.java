@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -28,11 +29,12 @@ public class CatBreed {
 	@Id
 	private String id;
 
+	@Indexed(unique = true)
 	private String name;
 
 	private String origin;
 
-	private int overageLifespan;
+	private int averageLifespan;
 
 	private Map<String, Integer> weight;
 

@@ -33,14 +33,17 @@ public class CatBreedDto {
     @Length(min = 5, max = 100, message = "Origin length must be from 3 to 100")
     private String origin;
 
-    @Min(value = 1L, message = "Cats don't leave less than 1 year")
-    @Max(value = 40L, message = "Cats don't leave more than 40 years")
-    private int overageLifespan;
+    @NotNull(message = "Average lifespan is required")
+    @Min(value = 1, message = "Cats don't leave less than 1 year")
+    @Max(value = 40, message = "Cats don't leave more than 40 years")
+    private Integer averageLifespan;
 
+    @NotNull(message = "Weight is required")
     @NotEmpty(message = "Weight is empty")
     @FromToMapsCustomValidate(message = "Weight is wrong")
     private Map<String, Integer> weight;
 
+    @NotNull(message = "Length is required")
     @NotEmpty(message = "Length is empty")
     @FromToMapsCustomValidate(message = "Length is wrong")
     private Map<String, Integer> length;
