@@ -1,0 +1,36 @@
+@import "../../../variables.less";
+
+:host {
+    display: block;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    > img {
+        width: 24%;
+    }
+}
+
+.content {
+    margin-top: 88px;
+    text-align: center;
+    font-weight: 500;
+    letter-spacing: 0em;
+
+    > h1 {
+        font-size: 64px;
+        line-height: 95px;
+    }
+
+    > h2 {
+        color: @dark-gray-100;
+        font-size: 48px;
+        line-height: 71px;
+
+        > .count {
+            color: @orange-100;
+        }
+    }
+}

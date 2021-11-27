@@ -1,0 +1,43 @@
+@import '../../../variables.less';
+@import '../../../mixins.less';
+
+:host {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 64px;
+    padding: 8px 0;
+    background: @black-100;
+}
+
+.wrapper {
+    display: flex;
+    width: 75vw;
+    max-width: 1160px;
+    margin: 0 auto;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 0 50px;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
+
+    > a {
+        color: @white-100;
+        text-decoration: none;
+
+        &.button {
+            .button();
+        }
+
+        &:hover {
+            color: @orange-100;
+        }
+    }
+}

@@ -1,0 +1,257 @@
+<div class="header">
+    <div class="title">
+        <h1>Search for kittens</h1>
+        <img src="/assets/cat-search.svg" alt="Funny cat" />
+    </div>
+    <button (click)="changeFilterVisibilily()" class="show-filter">
+        {{ filterShow ? 'Hide filter' : 'Show filter' }}
+    </button>
+</div>
+
+<form [formGroup]="filterForm" [class.filter_show]="filterShow" class="filter">
+    <div class="filter-container">
+        <div class="filter-item">
+            <h4 class="filter-item__title">Breed name</h4>
+            <input
+                class="filter-item__input filter-item__input_only"
+                formControlName="name"
+                type="text"
+            />
+        </div>
+        <div class="filter-item">
+            <h4 class="filter-item__title">Origin</h4>
+            <input
+                class="filter-item__input filter-item__input_only"
+                formControlName="origin"
+                type="text"
+            />
+        </div>
+        <div class="filter-item">
+            <h4 class="filter-item__title">Description</h4>
+            <input
+                class="filter-item__input filter-item__input_only"
+                formControlName="description"
+                type="text"
+                placeholder="Keywords"
+            />
+        </div>
+        <div class="filter-item">
+            <h4 class="filter-item__title">Life span</h4>
+            <input
+                class="filter-item__input"
+                formControlName="averageLifespanFrom"
+                type="number"
+                placeholder="From"
+                min="1"
+            />
+            <input
+                class="filter-item__input"
+                formControlName="averageLifespanTo"
+                type="number"
+                placeholder="To"
+                min="1"
+            />
+            <span>years</span>
+        </div>
+        <div class="filter-item">
+            <h4 class="filter-item__title">Length</h4>
+            <input
+                class="filter-item__input"
+                formControlName="lengthFrom"
+                type="number"
+                placeholder="From"
+                min="1"
+            />
+            <input
+                class="filter-item__input"
+                formControlName="lengthTo"
+                type="number"
+                placeholder="To"
+                min="1"
+            />
+            <span>cm</span>
+        </div>
+        <div class="filter-item">
+            <h4 class="filter-item__title">Weight</h4>
+            <input
+                class="filter-item__input"
+                formControlName="weightFrom"
+                type="number"
+                placeholder="From"
+                min="1"
+            />
+            <input
+                class="filter-item__input"
+                formControlName="weightTo"
+                type="number"
+                placeholder="To"
+                min="1"
+            />
+            <span>kg</span>
+        </div>
+        <div class="filter-item">
+            <h4 class="filter-item__title">Gentleness</h4>
+            <input
+                class="filter-item__input"
+                formControlName="gentlenessFrom"
+                type="number"
+                placeholder="From"
+                min="1"
+                max="10"
+            />
+            <input
+                class="filter-item__input"
+                formControlName="gentlenessTo"
+                type="number"
+                placeholder="To"
+                min="1"
+                max="10"
+            />
+        </div>
+        <div class="filter-item">
+            <h4 class="filter-item__title">Immunity</h4>
+            <input
+                class="filter-item__input"
+                formControlName="immunityFrom"
+                type="number"
+                placeholder="From"
+                min="1"
+                max="10"
+            />
+            <input
+                class="filter-item__input"
+                formControlName="immunityTo"
+                type="number"
+                placeholder="To"
+                min="1"
+                max="10"
+            />
+        </div>
+        <div class="filter-item">
+            <h4 class="filter-item__title">Playfulness</h4>
+            <input
+                class="filter-item__input"
+                formControlName="playfulnessFrom"
+                type="number"
+                placeholder="From"
+                min="1"
+                max="10"
+            />
+            <input
+                class="filter-item__input"
+                formControlName="playfulnessTo"
+                type="number"
+                placeholder="To"
+                min="1"
+                max="10"
+            />
+        </div>
+        <div class="filter-item">
+            <h4 class="filter-item__title">Molt</h4>
+            <input
+                class="filter-item__input"
+                formControlName="moltFrom"
+                type="number"
+                placeholder="From"
+                min="1"
+                max="10"
+            />
+            <input
+                class="filter-item__input"
+                formControlName="moltTo"
+                type="number"
+                placeholder="To"
+                min="1"
+                max="10"
+            />
+        </div>
+        <div class="filter-item">
+            <h4 class="filter-item__title">Care</h4>
+            <input
+                class="filter-item__input"
+                formControlName="careFrom"
+                type="number"
+                placeholder="From"
+                min="1"
+                max="10"
+            />
+            <input
+                class="filter-item__input"
+                formControlName="careTo"
+                type="number"
+                placeholder="To"
+                min="1"
+                max="10"
+            />
+        </div>
+        <div class="filter-item">
+            <h4 class="filter-item__title">Intelligence</h4>
+            <input
+                class="filter-item__input"
+                formControlName="intelligenceFrom"
+                type="number"
+                placeholder="From"
+                min="1"
+                max="10"
+            />
+            <input
+                class="filter-item__input"
+                formControlName="intelligenceTo"
+                type="number"
+                placeholder="To"
+                min="1"
+                max="10"
+            />
+        </div>
+        <div class="filter-item">
+            <h4 class="filter-item__title">Child friendliness</h4>
+            <input
+                class="filter-item__input"
+                formControlName="childFriendlinessFrom"
+                type="number"
+                placeholder="From"
+                min="1"
+                max="10"
+            />
+            <input
+                class="filter-item__input"
+                formControlName="childFriendlinessTo"
+                type="number"
+                placeholder="To"
+                min="1"
+                max="10"
+            />
+        </div>
+        <div class="filter-item">
+            <h4 class="filter-item__title">Pet friendliness</h4>
+            <input
+                class="filter-item__input"
+                formControlName="petFriendlinessFrom"
+                type="number"
+                placeholder="From"
+                min="1"
+                max="10"
+            />
+            <input
+                class="filter-item__input"
+                formControlName="petFriendlinessTo"
+                type="number"
+                placeholder="To"
+                min="1"
+                max="10"
+            />
+        </div>
+    </div>
+</form>
+
+<div class="result">
+    <ng-container *ngIf="searchResult$ | async as result; else noResults">
+        <ng-container *ngIf="result.length; else noResults">
+            <app-breeds-table [breeds]="result"></app-breeds-table>
+        </ng-container>
+    </ng-container>
+</div>
+
+<ng-template #noResults>
+    <h2>Breeds not found (</h2>
+</ng-template>

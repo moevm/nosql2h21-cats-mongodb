@@ -1,0 +1,18 @@
+<table>
+    <tr>
+        <th>Breed name</th>
+        <th>Origin</th>
+        <th>Weight, kg</th>
+        <th>Length, cm</th>
+        <th>Life span, years</th>
+    </tr>
+    <ng-container *ngFor="let breed of breeds">
+        <tr>
+            <td>{{ breed.name }}</td>
+            <td>{{ breed.origin }}</td>
+            <td>{{ breed.weight | toStringInterval }}</td>
+            <td>{{ breed.length | toStringInterval }}</td>
+            <td>{{ breed.averageLifespan }}</td>
+        </tr>
+    </ng-container>
+</table>

@@ -1,0 +1,124 @@
+<div class="header">
+    <div class="title">
+        <h1>Add breed</h1>
+    </div>
+</div>
+<form [formGroup]="breedForm">
+    <h2 class="group-title">Common</h2>
+    <div class="container">
+        <div class="container__item">
+            <h4 class="container__item__title">Breed name</h4>
+            <input class="container__item__input" formControlName="name" type="text" />
+        </div>
+        <div class="container__item">
+            <h4 class="container__item__title">Origin</h4>
+            <input class="container__item__input" formControlName="origin" type="text" />
+        </div>
+        <div class="container__item">
+            <h4 class="container__item__title">Lifespan, years</h4>
+            <input
+                class="container__item__input"
+                formControlName="averageLifespan"
+                type="number"
+                min="1"
+            />
+        </div>
+        <div class="container__item">
+            <h4 class="container__item__title">Length, cm</h4>
+            <input class="container__item__input" formControlName="length" type="text" />
+        </div>
+        <div class="container__item">
+            <h4 class="container__item__title">Weight, kg</h4>
+            <input class="container__item__input" formControlName="weight" type="text" />
+        </div>
+    </div>
+    <h2 class="group-title">
+        Characteiristics, from <span class="orange">1</span> to
+        <span class="orange">10</span>
+    </h2>
+    <div class="container container_s">
+        <div class="container__item">
+            <h4 class="container__item__title">Gentleness</h4>
+            <input
+                class="container__item__input"
+                formControlName="gentleness"
+                type="number"
+                min="1"
+                max="10"
+            />
+        </div>
+        <div class="container__item">
+            <h4 class="container__item__title">Immunity</h4>
+            <input
+                class="container__item__input"
+                formControlName="immunity"
+                type="number"
+                min="1"
+                max="10"
+            />
+        </div>
+        <div class="container__item">
+            <h4 class="container__item__title">Playfulness</h4>
+            <input
+                class="container__item__input"
+                formControlName="playfulness"
+                type="number"
+                min="1"
+                max="10"
+            />
+        </div>
+        <div class="container__item">
+            <h4 class="container__item__title">Molt</h4>
+            <input
+                class="container__item__input"
+                formControlName="molt"
+                type="number"
+                min="1"
+                max="10"
+            />
+        </div>
+        <div class="container__item">
+            <h4 class="container__item__title">Care</h4>
+            <input
+                class="container__item__input"
+                formControlName="care"
+                type="number"
+                min="1"
+                max="10"
+            />
+        </div>
+        <div class="container__item">
+            <h4 class="container__item__title">Intelligence</h4>
+            <input
+                class="container__item__input"
+                formControlName="intelligence"
+                type="number"
+                min="1"
+                max="10"
+            />
+        </div>
+        <div class="container__item">
+            <h4 class="container__item__title">Child friendliness</h4>
+            <input
+                class="container__item__input"
+                formControlName="childFriendliness"
+                type="number"
+                min="1"
+                max="10"
+            />
+        </div>
+        <div class="container__item">
+            <h4 class="container__item__title">Pet friendliness</h4>
+            <input
+                class="container__item__input"
+                formControlName="petFriendliness"
+                type="number"
+                min="1"
+                max="10"
+            />
+        </div>
+    </div>
+    <h2 class="group-title">Description</h2>
+    <textarea class="description" formControlName="description" rows="8"></textarea>
+    <button (click)="addBreed()" [disabled]="!breedForm.valid" type="button">Add</button>
+</form>

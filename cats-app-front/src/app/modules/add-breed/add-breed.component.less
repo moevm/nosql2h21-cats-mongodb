@@ -1,0 +1,84 @@
+@import '../../../mixins.less';
+@import '../../../variables.less';
+
+:host {
+    display: block;
+    margin-bottom: 60px;
+}
+
+.header {
+    .header();
+}
+
+.title {
+    .title();
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px 0;
+
+    &__item {
+        display: flex;
+        width: 30%;
+        flex-direction: column;
+
+        &__title {
+            margin-top: 12px;
+            font-size: 24px;
+            font-weight: 500;
+            line-height: 36px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        &__input {
+            padding: 12px 0;
+            border-bottom: 2px solid @dark-gray-100;
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 26px;
+
+            &:focus {
+                border-bottom-color: @orange-100;
+            }
+        }
+    }
+
+    &_s {
+        > .container__item {
+            width: 21%;
+        }
+    }
+}
+
+.group-title {
+    margin: 30px 0;
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 53px;
+}
+
+.orange {
+    color: @orange-100;
+}
+
+.description {
+    display: block;
+    width: 100%;
+    border-bottom: 2px solid @dark-gray-100;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 26px;
+
+    &:focus {
+        border-bottom-color: @orange-100;
+    }
+}
+
+.button {
+    .button();
+}
