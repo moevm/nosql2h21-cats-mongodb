@@ -6,7 +6,7 @@ COPY pom.xml /app/source/pom.xml
 COPY src /app/source/src
 WORKDIR /app/source
 RUN chmod +x ./mvnw
-RUN ./mvnw clean install
+RUN ./mvnw clean install -Dmaven.test.skip
 
 FROM builder
 COPY --from=builder /app/source/target/*.jar /app/app.jar
