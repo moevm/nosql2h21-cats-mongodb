@@ -21,6 +21,7 @@
                 formControlName="averageLifespan"
                 type="number"
                 min="1"
+                max="40"
             />
         </div>
         <div class="container__item">
@@ -120,5 +121,7 @@
     </div>
     <h2 class="group-title">Description</h2>
     <textarea class="description" formControlName="description" rows="8"></textarea>
-    <button (click)="addBreed()" [disabled]="!breedForm.valid" type="button">Add</button>
+    <h2 class="group-title">Images (links)</h2>
+    <textarea class="description" formControlName="images" rows="8"></textarea>
+    <button (click)="addBreed()" [disabled]="!breedForm.valid" type="button" class="button">Add breed</button>
 </form>

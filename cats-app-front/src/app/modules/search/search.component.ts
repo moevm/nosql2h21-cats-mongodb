@@ -1,11 +1,12 @@
 import {Filter} from './../../interfaces/filter.interface';
 import {BreedsService} from './../../services/breeds.service';
-import {debounceTime, filter, map} from 'rxjs/operators';
+import {debounceTime, filter, map, switchMap, take} from 'rxjs/operators';
 import {StoreService} from './../../services/store.service';
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {removeEmptyKeys} from 'src/app/utils/remove-null-keys.util';
 import {characteristicValidators} from 'src/app/consts/validators.const';
+import {merge} from 'rxjs';
 
 @Component({
     selector: 'app-search',
@@ -14,19 +15,19 @@ import {characteristicValidators} from 'src/app/consts/validators.const';
 })
 export class SearchComponent implements OnInit {
     readonly filterForm = new FormGroup({
-      name: new FormControl(null, []),
-      origin: new FormControl(null, []),
-      description: new FormControl(null, []),
-      averageLifespanFrom: new FormControl(null, [Validators.min(1)]),
-      averageLifespanTo: new FormControl(null, [Validators.min(1)]),
-      lengthFrom: new FormControl(null, [Validators.min(1)]),
-      lengthTo: new FormControl(null, [Validators.min(1)]),
-      weightFrom: new FormControl(null, [Validators.min(1)]),
-      weightTo: new FormControl(null, [Validators.min(1)]),
-      gentlenessFrom: new FormControl(null, characteristicValidators),
-      gentlenessTo: new FormControl(null, characteristicValidators),
-      immunityFrom: new FormControl(null, characteristicValidators),
-      immunityTo: new FormControl(null, characteristicValidators),
+        name: new FormControl(null, []),
+        origin: new FormControl(null, []),
+        description: new FormControl(null, []),
+        averageLifespanFrom: new FormControl(null, [Validators.min(1)]),
+        averageLifespanTo: new FormControl(null, [Validators.min(1)]),
+        lengthFrom: new FormControl(null, [Validators.min(1)]),
+        lengthTo: new FormControl(null, [Validators.min(1)]),
+        weightFrom: new FormControl(null, [Validators.min(1)]),
+        weightTo: new FormControl(null, [Validators.min(1)]),
+        gentlenessFrom: new FormControl(null, characteristicValidators),
+        gentlenessTo: new FormControl(null, characteristicValidators),
+        immunityFrom: new FormControl(null, characteristicValidators),
+        immunityTo: new FormControl(null, characteristicValidators),
         playfulnessFrom: new FormControl(null, characteristicValidators),
         playfulnessTo: new FormControl(null, characteristicValidators),
         moltFrom: new FormControl(null, characteristicValidators),
@@ -41,7 +42,10 @@ export class SearchComponent implements OnInit {
         petFriendlinessTo: new FormControl(null, characteristicValidators),
     });
 
-  readonly searchResult$ = this.store.searchResult$;
+    readonly searchResult$ = merge(
+        this.store.breeds$.pipe(take(1)),
+        this.store.searchResult$,
+    );
 
     filterShow = false;
 
@@ -55,15 +59,15 @@ export class SearchComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        this.breedsService.getAll().subscribe();
         this.filterForm.valueChanges
             .pipe(
-              filter<Filter>(() => this.valid),
-              map(filter => removeEmptyKeys(filter)),
-              debounceTime(600),
+                filter(() => this.valid),
+                map(filter => removeEmptyKeys<Filter>(filter)),
+                debounceTime(600),
+                switchMap(filter => this.breedsService.find(filter)),
             )
-            .subscribe(filter => {
-                this.breedsService.find(filter);
-            });
+            .subscribe();
     }
 
     changeFilterVisibilily() {
