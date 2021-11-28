@@ -14,10 +14,22 @@ import {of} from 'rxjs';
 })
 export class AddBreedComponent {
     readonly breedForm = new FormGroup({
-        name: new FormControl(null, [Validators.required, Validators.minLength(3)]),
-        origin: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+        name: new FormControl(null, [
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(100),
+        ]),
+        origin: new FormControl(null, [
+            Validators.required,
+            Validators.minLength(5),
+            Validators.maxLength(100),
+        ]),
         description: new FormControl(null, [Validators.required]),
-        averageLifespan: new FormControl(null, [Validators.min(1), Validators.required]),
+        averageLifespan: new FormControl(null, [
+            Validators.min(1),
+            Validators.max(40),
+            Validators.required,
+        ]),
         length: new FormControl(null, [intervalValifator, Validators.required]),
         weight: new FormControl(null, [intervalValifator, Validators.required]),
         gentleness: new FormControl(null, [
@@ -46,6 +58,7 @@ export class AddBreedComponent {
             ...characteristicValidators,
             Validators.required,
         ]),
+        images: new FormControl(null, [Validators.required]),
     });
 
     constructor(private readonly breedsService: BreedsService) {}
@@ -57,12 +70,15 @@ export class AddBreedComponent {
                 map(() => this.mapToBreed()),
                 switchMap(breed => this.breedsService.add(breed)),
             )
-            .subscribe();
+            .subscribe(() => {
+                this.breedForm.reset();
+            });
     }
 
     private mapToBreed(): Breed {
         const length = (this.breedForm.value.length as string).split('-');
         const weight = (this.breedForm.value.weight as string).split('-');
+        const images = (this.breedForm.value.images as string).split(/\s/g);
 
         return {
             name: this.breedForm.value.name,
@@ -87,7 +103,7 @@ export class AddBreedComponent {
                 petFriendliness: this.breedForm.value.petFriendliness,
             },
             description: this.breedForm.value.description,
-            image: [],
+            image: images,
         };
     }
 }
