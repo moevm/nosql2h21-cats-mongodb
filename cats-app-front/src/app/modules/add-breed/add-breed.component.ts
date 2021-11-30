@@ -72,6 +72,7 @@ export class AddBreedComponent {
             )
             .subscribe(() => {
                 this.breedForm.reset();
+                alert('Порода добавлена!');
             });
     }
 
