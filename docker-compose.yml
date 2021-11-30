@@ -3,14 +3,13 @@ version: "3.8"
 services:
   mongodb:
     image: mongo
-    ports:
-      - 27017:27017
     restart: unless-stopped
     volumes:
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
 
   app:
     build:
+      context: ./
       dockerfile: Dockerfile
     environment:
       - PORT=8080
