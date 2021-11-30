@@ -26,11 +26,21 @@
         </div>
         <div class="container__item">
             <h4 class="container__item__title">Length, cm</h4>
-            <input class="container__item__input" formControlName="length" type="text" />
+            <input
+                class="container__item__input"
+                formControlName="length"
+                type="text"
+                placeholder="<From>-<To>"
+            />
         </div>
         <div class="container__item">
             <h4 class="container__item__title">Weight, kg</h4>
-            <input class="container__item__input" formControlName="weight" type="text" />
+            <input
+                class="container__item__input"
+                formControlName="weight"
+                type="text"
+                placeholder="<From>-<To>"
+            />
         </div>
     </div>
     <h2 class="group-title">
@@ -122,6 +132,22 @@
     <h2 class="group-title">Description</h2>
     <textarea class="description" formControlName="description" rows="8"></textarea>
     <h2 class="group-title">Images (links)</h2>
-    <textarea class="description" formControlName="images" rows="8"></textarea>
-    <button (click)="addBreed()" [disabled]="!breedForm.valid" type="button" class="button">Add breed</button>
+    <textarea
+        class="description"
+        formControlName="images"
+        rows="8"
+        [placeholder]="
+            'https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554__340.jpg' +
+            '\n' +
+            'https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554__341.jpg'
+        "
+    ></textarea>
+    <button
+        (click)="addBreed()"
+        [disabled]="!breedForm.valid"
+        type="button"
+        class="button"
+    >
+        Add breed
+    </button>
 </form>
