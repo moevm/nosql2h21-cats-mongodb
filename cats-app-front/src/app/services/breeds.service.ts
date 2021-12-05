@@ -5,7 +5,7 @@ import {Filter} from '../interfaces/filter.interface';
 import {ApiService} from './api.service';
 import {StoreService} from './store.service';
 import {Injectable} from '@angular/core';
-import {mapTo, tap} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
@@ -21,6 +21,10 @@ export class BreedsService {
         );
     }
 
+    get(name: string): Observable<Breed | null> {
+        return this.api.getBreed(name);
+    }
+
     find(params: Filter): Observable<BreedsArray> {
         return this.api.getBreeds(params).pipe(
             tap(breeds => {
@@ -31,5 +35,9 @@ export class BreedsService {
 
     add(breed: Breed): Observable<unknown> {
         return this.api.setBreed(breed);
+    }
+
+    addAll(breeds: BreedsArray): Observable<unknown> {
+        return this.api.setBreeds(breeds);
     }
 }

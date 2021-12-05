@@ -21,7 +21,17 @@ export class ApiService {
             .pipe(catchError(e => of([])));
     }
 
+    getBreed(name: string): Observable<Breed | null> {
+        return this.http
+            .get<Breed>(`${HOST}/breed/${name}`)
+            .pipe(catchError(e => of(null)));
+    }
+
     setBreed(breed: Breed): Observable<unknown> {
         return this.http.post(`${HOST}/api/v1/breed`, breed);
+    }
+
+    setBreeds(breeds: BreedsArray): Observable<unknown> {
+        return this.http.post(`${HOST}/api/v1/breeds`, breeds);
     }
 }

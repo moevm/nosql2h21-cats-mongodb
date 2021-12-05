@@ -29,7 +29,7 @@ function generateMock(): Breed {
             petFriendliness: r(),
         },
         description: ``,
-        image: [],
+        images: [],
     };
 }
 

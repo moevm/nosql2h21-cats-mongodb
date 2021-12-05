@@ -1,3 +1,4 @@
+import {NotificationService} from './../../services/notification.service';
 import {filter, map, switchMap} from 'rxjs/operators';
 import {Breed} from './../../models/breed.model';
 import {BreedsService} from './../../services/breeds.service';
@@ -61,7 +62,10 @@ export class AddBreedComponent {
         images: new FormControl(null, [Validators.required]),
     });
 
-    constructor(private readonly breedsService: BreedsService) {}
+    constructor(
+        private readonly breedsService: BreedsService,
+        private readonly notificationService: NotificationService,
+    ) {}
 
     addBreed() {
         of(this.breedForm.valid)
@@ -70,10 +74,15 @@ export class AddBreedComponent {
                 map(() => this.mapToBreed()),
                 switchMap(breed => this.breedsService.add(breed)),
             )
-            .subscribe(() => {
-                this.breedForm.reset();
-                alert('Breed added!');
-            });
+            .subscribe(
+                () => {
+                    this.breedForm.reset();
+                    this.notificationService.showSuccess('Breed added!');
+                },
+                () => {
+                    this.notificationService.showError('Try again later');
+                },
+            );
     }
 
     private mapToBreed(): Breed {
@@ -104,7 +113,7 @@ export class AddBreedComponent {
                 petFriendliness: this.breedForm.value.petFriendliness,
             },
             description: this.breedForm.value.description,
-            image: images,
+            images: images,
         };
     }
 }

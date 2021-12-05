@@ -1,0 +1,36 @@
+@import '../../../mixins.less';
+@import '../../../variables.less';
+
+:host {
+    display: block;
+}
+
+.header {
+    .header();
+}
+
+.title {
+    .title();
+}
+
+.button {
+    .button();
+
+    margin: 20px 20px 0 0;
+    color: @white-100;
+}
+
+.input {
+    height: 50vh;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid @gray-100;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    word-break: break-all;
+    word-wrap: break-word;
+
+    &:focus {
+        border-color: @orange-100;
+    }
+}
