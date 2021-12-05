@@ -22,9 +22,7 @@ export class BreedsService {
     }
 
     get(name: string): Observable<Breed | null> {
-        return this.api
-            .getBreeds({name})
-            .pipe(map(breeds => (breeds.length ? breeds[0] : null)));
+        return this.api.getBreed(name);
     }
 
     find(params: Filter): Observable<BreedsArray> {
