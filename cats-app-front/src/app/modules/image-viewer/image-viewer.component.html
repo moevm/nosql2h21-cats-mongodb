@@ -1,0 +1,5 @@
+<div class="wrapper">
+    <div class="arrow" [class.disabled]="position === 0">Left</div>
+    <img alt="Cat image" [src]="images[position]" />
+    <div class="arrow" [class.disabled]="position === images.length - 1">Right</div>
+</div>

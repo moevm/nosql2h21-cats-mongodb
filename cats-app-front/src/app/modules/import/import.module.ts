@@ -5,5 +5,6 @@ import {ImportComponent} from './import.component';
 @NgModule({
     imports: [CommonModule],
     declarations: [ImportComponent],
+    exports: [ImportComponent],
 })
 export class ImportModule {}

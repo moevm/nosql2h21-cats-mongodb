@@ -1,1 +1,13 @@
-<p>export works!</p>
+<div class="header">
+    <div class="title">
+        <h1>Export</h1>
+    </div>
+</div>
+<textarea
+    class="input"
+    placeholder="Enter data in JSON format"
+    [formControl]="input"
+></textarea>
+<button type="button" class="button" [disabled]="!input.valid" (click)="export()">
+    Export
+</button>

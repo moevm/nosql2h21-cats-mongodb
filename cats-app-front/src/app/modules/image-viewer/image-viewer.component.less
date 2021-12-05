@@ -1,0 +1,28 @@
+@import '../../../variables.less';
+
+:host {
+    display: block;
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.arrow {
+    height: inherit;
+    flex: 0 0 40px;
+    cursor: pointer;
+    text-align: center;
+    color: @orange-100;
+
+    &.disabled {
+        opacity: 0.6;
+        cursor: default;
+    }
+}
+
+img {
+    width: 75%;
+}

@@ -1,4 +1,4 @@
-import {NotificationModule} from './modules/notification/notification.module';
+import {BreedModule} from './modules/breed/breed.module';
 import {AddBreedModule} from './modules/add-breed/add-breed.module';
 import {SearchModule} from './modules/search/search.module';
 import {ImportModule} from './modules/import/import.module';
@@ -24,7 +24,7 @@ import {HttpClientModule} from '@angular/common/http';
         AddBreedModule,
         AppRoutingModule,
         HttpClientModule,
-        NotificationModule,
+        BreedModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

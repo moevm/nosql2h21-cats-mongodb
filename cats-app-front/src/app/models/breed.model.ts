@@ -21,5 +21,5 @@ export interface Breed {
         petFriendliness: number;
     };
     description: string;
-    image: ReadonlyArray<string>;
+    images: ReadonlyArray<string>;
 }

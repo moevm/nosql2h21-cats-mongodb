@@ -1,1 +1,10 @@
-<p>import works!</p>
+<div class="header">
+    <div class="title">
+        <h1>Import</h1>
+    </div>
+</div>
+<div class="output">
+    {{ (imported$ | async) ? (data$ | async) : 'The data will appear here.' }}
+</div>
+<button type="button" class="button" (click)="import()">Import</button>
+<button *ngIf="imported$ | async" type="button" class="button" (click)="copy()">Copy to clipboard</button>
