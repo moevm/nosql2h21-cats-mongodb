@@ -3,6 +3,7 @@ package ru.nosqlproject.catsmongo.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
@@ -57,6 +58,15 @@ public class MainController {
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
+    @GetMapping("/breed/{name}")
+    public ResponseEntity<?> getBreedByName(@PathVariable("name") String name) {
+        Optional<CatBreedDto> breedByName = catBreedService.findByName(name);
+
+        if (breedByName.isEmpty()) {
+            return ResponseEntity.badRequest().body("No breed with such name!");
+        }
+        return ResponseEntity.ok(breedByName.get());
+    }
 
     @GetMapping("/breed")
     public ResponseEntity<List<CatBreedDto>> getAllBreedsByFilter(

@@ -1,5 +1,10 @@
 package ru.nosqlproject.catsmongo.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -10,9 +15,6 @@ import ru.nosqlproject.catsmongo.dto.CatBreedDto;
 import ru.nosqlproject.catsmongo.entity.CatBreed;
 import ru.nosqlproject.catsmongo.mapping.CatBreedMapper;
 import ru.nosqlproject.catsmongo.repository.CatBreedRepository;
-
-//import java.awt.print.Pageable;
-import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +31,6 @@ public class CatBreedServiceImpl implements CatBreedService {
 
         } catch (Exception e) {
 
-            System.out.println(e.getMessage());
             return new ArrayList<>();
         }
     }
@@ -62,6 +63,7 @@ public class CatBreedServiceImpl implements CatBreedService {
 
     @Override
     public Map<String, Object> loadDb(List<CatBreedDto> breeds) {
+        catBreedRepository.deleteAll();
         long before = catBreedRepository.count();
 
         catBreedRepository.saveAll(catBreedMapper.toEntityList(breeds));
@@ -82,6 +84,11 @@ public class CatBreedServiceImpl implements CatBreedService {
         return catBreedRepository.findAll().stream()
                 .map(catBreedMapper::fromEntity)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<CatBreedDto> findByName(String name) {
+        return catBreedRepository.findCatBreedByName(name).map(catBreedMapper::fromEntity);
     }
 
     @Override

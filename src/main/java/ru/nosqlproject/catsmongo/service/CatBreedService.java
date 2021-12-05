@@ -1,11 +1,9 @@
 package ru.nosqlproject.catsmongo.service;
 
-import ru.nosqlproject.catsmongo.dto.CatBreedDto;
-import ru.nosqlproject.catsmongo.entity.CatBreed;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import ru.nosqlproject.catsmongo.dto.CatBreedDto;
 
 public interface CatBreedService {
 
@@ -22,4 +20,6 @@ public interface CatBreedService {
     Map<String, Object> loadDb(List<CatBreedDto> breeds);
 
     List<CatBreedDto> exportDB();
+
+    Optional<CatBreedDto> findByName(String name);
 }
