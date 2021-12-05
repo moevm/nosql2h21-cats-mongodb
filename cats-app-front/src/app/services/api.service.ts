@@ -23,7 +23,7 @@ export class ApiService {
 
     getBreed(name: string): Observable<Breed | null> {
         return this.http
-            .get<Breed>(`${HOST}/breed/${name}`)
+        .get<Breed>(`${HOST}/api/v1/breed/${name}`)
             .pipe(catchError(e => of(null)));
     }
 
