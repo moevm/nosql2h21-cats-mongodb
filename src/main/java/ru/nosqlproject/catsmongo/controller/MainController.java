@@ -51,13 +51,6 @@ public class MainController {
         return ResponseEntity.ok(res);
     }
 
-    @GetMapping("/breed/{id}")
-    public ResponseEntity<CatBreedDto> getBreedById(@PathVariable("id") String id) {
-        return catBreedService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.badRequest().build());
-    }
-
     @GetMapping("/breed/{name}")
     public ResponseEntity<?> getBreedByName(@PathVariable("name") String name) {
         Optional<CatBreedDto> breedByName = catBreedService.findByName(name);
@@ -80,7 +73,6 @@ public class MainController {
             return ResponseEntity.ok(res);
         }
     }
-
 
     @PostMapping("/breeds")
     public ResponseEntity<?> loadNewDB(
