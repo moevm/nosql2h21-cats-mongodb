@@ -1,3 +1,5 @@
+import {BreedResolver} from './resolvers/breed.resolver';
+import {BreedComponent} from './modules/breed/breed.component';
 import {AddBreedComponent} from './modules/add-breed/add-breed.component';
 import {LandingComponent} from './modules/landing/landing.component';
 import {ExportComponent} from './modules/export/export.component';
@@ -7,6 +9,13 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
 const routes: Routes = [
+    {
+        path: 'breed/:name',
+        component: BreedComponent,
+        resolve: {
+            breed: BreedResolver,
+        },
+    },
     {
         path: 'search',
         component: SearchComponent,

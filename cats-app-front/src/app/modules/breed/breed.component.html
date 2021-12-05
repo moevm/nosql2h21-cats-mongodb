@@ -1,0 +1,77 @@
+<ng-container *ngIf="breed$ | async as breed; else NotFound">
+    <div class="header">
+        <div class="title">
+            <h1>{{ breed.name }}</h1>
+        </div>
+    </div>
+    <ng-container *ngIf="breed.images.length">
+        <app-image-viewer [images]="breed.images"></app-image-viewer>
+    </ng-container>
+    <div class="wrapper">
+        <h2 class="group-title">Common</h2>
+        <div class="wrapper__group">
+            <div class="wrapper__group__item">
+                <h3 class="wrapper__group__item__title">Origin</h3>
+                <h3>{{ breed.origin }}</h3>
+            </div>
+            <div class="wrapper__group__item">
+                <h3 class="wrapper__group__item__title">Weight</h3>
+                <h3>{{ (breed.weight | toStringInterval) + ' kg' }}</h3>
+            </div>
+            <div class="wrapper__group__item">
+                <h3 class="wrapper__group__item__title">Length</h3>
+                <h3>{{ (breed.length | toStringInterval) + ' cm' }}</h3>
+            </div>
+            <div class="wrapper__group__item">
+                <h3 class="wrapper__group__item__title">Life span</h3>
+                <h3>{{ breed.averageLifespan + ' years' }}</h3>
+            </div>
+        </div>
+        <h2 class="group-title">Characteristics</h2>
+        <div class="wrapper__group">
+            <div class="wrapper__group__item">
+                <h3 class="wrapper__group__item__title">Care</h3>
+                <h3>{{ breed.characteristics.care }}</h3>
+            </div>
+            <div class="wrapper__group__item">
+                <h3 class="wrapper__group__item__title">Gentleness</h3>
+                <h3>{{ breed.characteristics.gentleness }}</h3>
+            </div>
+            <div class="wrapper__group__item">
+                <h3 class="wrapper__group__item__title">Immunity</h3>
+                <h3>{{ breed.characteristics.immunity }}</h3>
+            </div>
+            <div class="wrapper__group__item">
+                <h3 class="wrapper__group__item__title">Intelligence</h3>
+                <h3>{{ breed.characteristics.intelligence }}</h3>
+            </div>
+            <div class="wrapper__group__item">
+                <h3 class="wrapper__group__item__title">Molt</h3>
+                <h3>{{ breed.characteristics.molt }}</h3>
+            </div>
+            <div class="wrapper__group__item">
+                <h3 class="wrapper__group__item__title">Playfulness</h3>
+                <h3>{{ breed.characteristics.playfulness }}</h3>
+            </div>
+            <div class="wrapper__group__item">
+                <h3 class="wrapper__group__item__title">Child friendliness</h3>
+                <h3>{{ breed.characteristics.childFriendliness }}</h3>
+            </div>
+            <div class="wrapper__group__item">
+                <h3 class="wrapper__group__item__title">Pet friendliness</h3>
+                <h3>{{ breed.characteristics.petFriendliness }}</h3>
+            </div>
+        </div>
+        <h2 class="group-title">Description</h2>
+        <p class="text">{{breed.description}}</p>
+    </div>
+</ng-container>
+
+<ng-template #NotFound>
+    <div class="header">
+        <div class="title">
+            <h2>This breed is not found, but you can add it!</h2>
+            <img src="/assets/cat-not-found.svg" alt="Funny cat" width="48" height="48" />
+        </div>
+    </div>
+</ng-template>

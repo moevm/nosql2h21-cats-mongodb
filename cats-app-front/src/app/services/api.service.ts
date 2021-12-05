@@ -24,4 +24,8 @@ export class ApiService {
     setBreed(breed: Breed): Observable<unknown> {
         return this.http.post(`${HOST}/api/v1/breed`, breed);
     }
+
+    setBreeds(breeds: BreedsArray): Observable<unknown> {
+        return this.http.post(`${HOST}/api/v1/breeds`, breeds);
+    }
 }

@@ -1,0 +1,53 @@
+@import '../../../mixins.less';
+@import '../../../variables.less';
+
+:host {
+    display: block;
+    margin-bottom: 60px;
+}
+
+.header {
+    .header();
+}
+
+.title {
+    .title();
+}
+
+.wrapper {
+    margin: 60px 0;
+
+    &__group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px 60px;
+
+        &__item {
+            display: flex;
+            
+            > h3 {
+                font-size: 24px;
+                font-weight: 500;
+                line-height: 36px;
+            }
+
+            &__title {
+                margin-right: 12px;
+                color: @orange-100;
+            }
+        }
+    }
+}
+
+.group-title {
+    margin: 30px 0;
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 53px;
+}
+
+.text {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 36px;
+}
